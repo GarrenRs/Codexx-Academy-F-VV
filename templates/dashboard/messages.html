@@ -1,0 +1,258 @@
+{% extends "dashboard/base.html" %} {% block title %}Messages - Dashboard{%
+endblock %} {% block page_title %}Messages{% endblock %} {% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center py-3" style="background: rgba(0,0,0,0.2);">
+                <h5 class="mb-0 fw-bold">
+                    <i class="fas fa-envelope-open-text me-2 text-gold"></i>
+                    {% if current_category == 'platform' %}
+                        <span class="gold-text">Academy Inquiries</span>
+                    {% elif current_category == 'internal' %}
+                        <span class="gold-text">Internal Communications</span>
+                    {% elif current_category == 'portfolio' %}
+                        <span class="gold-text">Portfolio Messages</span>
+                    {% else %}
+                        <span class="gold-text">All Messages</span>
+                    {% endif %}
+                </h5>
+                <div>
+                    <div class="btn-group btn-group-sm me-2">
+                        <a href="{{ url_for('dashboard_messages', category='all') }}" class="btn btn-outline-gold {% if not current_category or current_category == 'all' %}active{% endif %}">All</a>
+                        {% if is_admin %}
+                        <a href="{{ url_for('dashboard_messages', category='platform') }}" class="btn btn-outline-gold {% if current_category == 'platform' %}active{% endif %}">Platform</a>
+                        <a href="{{ url_for('dashboard_messages', category='internal') }}" class="btn btn-outline-gold {% if current_category == 'internal' %}active{% endif %}">Internal</a>
+                        {% else %}
+                        <a href="{{ url_for('dashboard_messages', category='portfolio') }}" class="btn btn-outline-gold {% if current_category == 'portfolio' %}active{% endif %}">Portfolio</a>
+                        <a href="{{ url_for('dashboard_messages', category='internal') }}" class="btn btn-outline-gold {% if current_category == 'internal' %}active{% endif %}">Internal</a>
+                        {% endif %}
+                    </div>
+                    <select class="form-select form-select-sm" style="width: auto; display: inline-block; margin-right: 10px;" onchange="window.location.href='{{ url_for('dashboard_messages', category=current_category) }}&priority=' + this.value">
+                        <option value="all">All Priority</option>
+                        <option value="high">🔴 High</option>
+                        <option value="normal">🟡 Normal</option>
+                        <option value="low">🟢 Low</option>
+                    </select>
+                    <div class="badge bg-primary">{{ messages|length }} Messages</div>
+                </div>
+            </div>
+            <div class="card-body">
+                {% if messages %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead style="background: var(--gold-gradient)">
+                            <tr>
+                                <th
+                                    style="
+                                        color: #000000 !important;
+                                        font-weight: 600;
+                                    "
+                                >
+                                    Status
+                                </th>
+                                <th
+                                    style="
+                                        color: #000000 !important;
+                                        font-weight: 600;
+                                    "
+                                >
+                                    Type / Area
+                                </th>
+                                <th
+                                    style="
+                                        color: #000000 !important;
+                                        font-weight: 600;
+                                    "
+                                >
+                                    Name
+                                </th>
+                                <th
+                                    style="
+                                        color: #000000 !important;
+                                        font-weight: 600;
+                                    "
+                                >
+                                    Email
+                                </th>
+                                <th
+                                    style="
+                                        color: #000000 !important;
+                                        font-weight: 600;
+                                    "
+                                >
+                                    Message Preview
+                                </th>
+                                <th
+                                    style="
+                                        color: #000000 !important;
+                                        font-weight: 600;
+                                    "
+                                >
+                                    Date
+                                </th>
+                                <th
+                                    style="
+                                        color: #000000 !important;
+                                        font-weight: 600;
+                                    "
+                                >
+                                    Actions
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for message in messages %}
+                            {# Logic check: Receiver must be current user OR sender must be current user #}
+                            {% set is_participant = False %}
+                            {% if is_admin %}
+                                {# Admin only sees platform and internal messages #}
+                                {% if message.category in ['platform', 'internal'] %}
+                                    {% set is_participant = True %}
+                                {% endif %}
+                            {% elif message.receiver_id|string == session.get('user_id')|string or message.sender_id|string == session.get('user_id')|string %}
+                                {% set is_participant = True %}
+                            {# Fallback for messages from JSON that don't have receiver_id stored in the flattened dict #}
+                            {% elif not message.is_db %}
+                                {% set is_participant = True %}
+                            {# Even if not admin, if it's a portfolio message we display it to ensure visibility for regular users #}
+                            {% elif message.category == 'portfolio' %}
+                                {% set is_participant = True %}
+                            {% endif %}
+                            
+                            {% if is_participant %}
+                            <tr class="{{ 'table-light' if message.read else 'table-warning shadow-sm' }}" style="{{ 'border-left: 4px solid var(--primary-gold);' if not message.read else '' }}">
+                                <td>
+                                    {% if message.read %}
+                                    <span class="badge bg-success opacity-75" style="font-size: 0.7rem; border-radius: 4px;">
+                                        <i class="fas fa-check-double"></i> Processed
+                                    </span>
+                                    {% else %}
+                                    <span class="badge bg-warning text-black animate-pulse" style="font-size: 0.7rem; border-radius: 4px; box-shadow: 0 0 10px rgba(255, 193, 7, 0.3);">
+                                        <i class="fas fa-envelope"></i> Unread
+                                    </span>
+                                    {% endif %}
+                                    <br>
+                                    {% if message.priority == 'high' %}
+                                    <span class="badge bg-danger mt-1"><i class="fas fa-exclamation-circle"></i> 🔴 High</span>
+                                    {% elif message.priority == 'low' %}
+                                    <span class="badge bg-info mt-1"><i class="fas fa-check-circle"></i> 🟢 Low</span>
+                                    {% else %}
+                                    <span class="badge bg-secondary mt-1"><i class="fas fa-minus-circle"></i> 🟡 Normal</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <div class="d-flex flex-column gap-1">
+                                        {% if message.category == 'platform' %}
+                                            <span class="badge bg-primary border-light shadow-sm" style="font-size: 0.65rem;"><i class="fas fa-university"></i> ACADEMY INQUIRY</span>
+                                        {% elif message.category == 'internal' %}
+                                            <span class="badge bg-info-gradient text-black border-gold shadow-sm" style="font-size: 0.65rem;"><i class="fas fa-reply-all"></i> INTERNAL COMMUNICATION</span>
+                                        {% elif message.category == 'portfolio' %}
+                                            <span class="badge bg-success border-light shadow-sm" style="font-size: 0.65rem;"><i class="fas fa-briefcase"></i> PORTFOLIO DIRECT</span>
+                                        {% else %}
+                                            <span class="badge bg-success border-light shadow-sm" style="font-size: 0.65rem;"><i class="fas fa-briefcase"></i> PORTFOLIO DIRECT</span>
+                                        {% endif %}
+                                        <small class="text-muted fw-bold" style="font-size: 0.7rem;">{{ message.interest_area or 'General' }}</small>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="avatar-sm bg-dark rounded-circle d-flex align-items-center justify-content-center border border-secondary" style="width: 32px; height: 32px;">
+                                            <i class="fas fa-user-circle text-gold" style="font-size: 1.2rem;"></i>
+                                        </div>
+                                        <div>
+                                            <strong class="text-dark d-block mb-0" style="font-size: 0.9rem;">{{ message.name }}</strong>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <a
+                                        href="mailto:{{ message.email }}"
+                                        class="text-decoration-none"
+                                        style="color: #0066cc !important;"
+                                    >
+                                        {{ message.email }}
+                                    </a>
+                                </td>
+                                <td>
+                                    <p class="mb-0" style="color: #333333 !important;">
+                                        {{ message.message[:80] }}{% if
+                                        message.message|length > 80 %}...{%
+                                        endif %}
+                                    </p>
+                                </td>
+                                <td>
+                                    <small style="color: #666666 !important;"
+                                        >{{ message.date }}</small
+                                    >
+                                </td>
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <a
+                                            href="{{ url_for('dashboard_view_message', message_id=message.id) }}"
+                                            class="btn btn-gold-gradient btn-sm shadow-sm"
+                                            title="Open Conversation"
+                                        >
+                                            <i class="fas fa-comments me-1"></i> Open
+                                        </a>
+                                        <a
+                                            href="{{ url_for('dashboard_delete_message', message_id=message.id) }}"
+                                            class="btn btn-outline-danger btn-sm"
+                                            onclick="return confirm('Archive/Delete this message?')"
+                                            title="Delete"
+                                        >
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center text-muted py-5">
+                    <i class="fas fa-envelope-open fa-3x mb-3 opacity-50"></i>
+                    <h5>No Messages Yet</h5>
+                    <p>
+                        When visitors send messages through your contact form,
+                        they will appear here.
+                    </p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if messages %}
+<div class="row mt-4">
+    <div class="col-lg-4">
+        <div class="card bg-primary text-white">
+            <div class="card-body text-center">
+                <i class="fas fa-envelope fa-2x mb-2"></i>
+                <h5>Total Messages</h5>
+                <h3>{{ messages|length }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card bg-warning text-white">
+            <div class="card-body text-center">
+                <i class="fas fa-exclamation-circle fa-2x mb-2"></i>
+                <h5>Unread Messages</h5>
+                <h3>{{ messages|selectattr('read', 'false')|list|length }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card bg-success text-white">
+            <div class="card-body text-center">
+                <i class="fas fa-check-circle fa-2x mb-2"></i>
+                <h5>Read Messages</h5>
+                <h3>{{ messages|selectattr('read', 'true')|list|length }}</h3>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %} {% endblock %}

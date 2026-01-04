@@ -1,0 +1,584 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-portfolio-theme="{{ current_theme }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="Codexx Admin Dashboard - Manage your portfolio, clients, and content">
+    <meta name="theme-color" content="#D4AF37">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <title>{% block title %}Dashboard{% endblock %} - Codexx Admin</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='themes/' + (current_theme if current_theme else 'luxury-gold') + '.css') }}">
+
+    <style>
+        :root {
+            --primary-gold: #D4AF37;
+            --primary-dark: #B8941F;
+            --sidebar-width: 280px;
+            --sidebar-bg: #111111;
+            --card-bg: rgba(30, 30, 30, 0.6);
+            --gold-gradient: linear-gradient(135deg, #D4AF37 0%, #FFD700 50%, #B8941F 100%);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .custom-btn-glow {
+            border: 1px solid rgba(212, 175, 55, 0.5) !important;
+            transition: var(--transition);
+            font-weight: 600 !important;
+            letter-spacing: 0.5px;
+            color: #D4AF37 !important;
+        }
+
+        .custom-btn-glow:hover {
+            background: var(--gold-gradient) !important;
+            color: #000 !important;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4) !important;
+            transform: translateY(-2px);
+        }
+
+        /* Improved Button Visibility on Dark Backgrounds */
+        .btn-outline-gold {
+            color: #D4AF37 !important;
+            border-color: #D4AF37 !important;
+        }
+        .btn-outline-gold:hover {
+            background-color: #D4AF37 !important;
+            color: #000 !important;
+        }
+        .btn-gold-gradient {
+            background: var(--gold-gradient) !important;
+            color: #000 !important;
+            border: none !important;
+            font-weight: 600 !important;
+        }
+        .btn-gold-gradient:hover {
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.5) !important;
+            transform: translateY(-1px);
+        }
+        .btn-outline-secondary {
+            color: #aaa !important;
+            border-color: rgba(255, 255, 255, 0.2) !important;
+        }
+        .btn-outline-secondary:hover {
+            background: rgba(255, 255, 255, 0.1) !important;
+            color: #fff !important;
+        }
+        .nav-link.text-danger {
+            color: #ff4d4d !important;
+            font-weight: 600 !important;
+        }
+        .nav-link.text-danger:hover {
+            background: rgba(255, 77, 77, 0.1) !important;
+        }
+        .gold-text {
+            color: #D4AF37 !important;
+            text-shadow: 0 0 5px rgba(212, 175, 55, 0.2);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+            display: flex;
+        }
+
+        /* Modern Sidebar */
+        .sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: var(--sidebar-bg);
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 1000;
+            border-right: 1px solid rgba(212, 175, 55, 0.1);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-header {
+            padding: 2rem 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .brand-logo img {
+            height: 40px;
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.3));
+        }
+
+        .brand-name {
+            font-weight: 900;
+            font-size: 1.2rem;
+            color: #fff;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .sidebar-content {
+            flex: 1;
+            padding: 1.5rem 1rem;
+            overflow-y: auto;
+        }
+
+        .nav-section-title {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: rgba(255, 255, 255, 0.3);
+            margin: 1.5rem 0 0.75rem 0.5rem;
+            font-weight: 600;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0.85rem 1rem;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            border-radius: 12px;
+            transition: var(--transition);
+            margin-bottom: 4px;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .nav-link i {
+            font-size: 1.1rem;
+            width: 24px;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .nav-link:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateX(4px);
+        }
+
+        .nav-link.active {
+            background: var(--gold-gradient);
+            color: #000 !important;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .nav-link.active i {
+            color: #000 !important;
+        }
+
+        .sidebar-footer {
+            padding: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Main Content Area */
+        .main-wrapper {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+            position: relative;
+            background: #0a0a0a;
+            width: calc(100% - var(--sidebar-width));
+        }
+
+        .top-navbar {
+            height: 70px;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 0 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+
+        .content-body {
+            padding: 1.5rem;
+            width: 100%;
+            margin: 0;
+            flex: 1;
+        }
+
+        /* Modern UI Components */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            border-color: rgba(212, 175, 55, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .page-title-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .page-title-section h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .breadcrumb {
+            background: transparent;
+            padding: 0;
+            margin: 0;
+        }
+
+        .breadcrumb-item a {
+            color: var(--primary-gold);
+            text-decoration: none;
+        }
+
+        .breadcrumb-item.active {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 992px) {
+            .sidebar {
+                left: -100%;
+            }
+            .sidebar.show {
+                left: 0;
+            }
+            .main-wrapper {
+                margin-left: 0;
+            }
+            .top-navbar {
+                padding: 0 1rem;
+            }
+        }
+    </style>
+    <style>
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: -250px;
+                width: 250px;
+                z-index: 1000;
+                transition: left 0.3s ease;
+            }
+
+            .sidebar.show {
+                left: 0;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <a href="{{ url_for('dashboard') }}" class="brand-logo">
+                <img src="{{ url_for('static', filename='logo/logo.png') }}" alt="Codexx Logo">
+                <span class="brand-name">Codexx Academy</span>
+            </a>
+        </div>
+
+        <div class="sidebar-content">
+            <nav>
+                <a href="{{ url_for('dashboard') }}" class="nav-link {% if request.endpoint == 'dashboard' %}active{% endif %}">
+                    <i class="fas fa-th-large"></i>
+                    <span>Overview</span>
+                </a>
+
+                {% if session.get('is_admin') %}
+                <div class="nav-section-title">System Admin</div>
+                <a href="{{ url_for('dashboard_users') }}" class="nav-link {% if request.endpoint == 'dashboard_users' %}active{% endif %}">
+                    <i class="fas fa-users-cog"></i>
+                    <span>User Directory</span>
+                </a>
+                <a href="{{ url_for('dashboard_social') }}" class="nav-link {% if request.endpoint == 'dashboard_social' %}active{% endif %}">
+                    <i class="fas fa-hashtag"></i>
+                    <span>Channels</span>
+                </a>
+                
+                <div class="nav-section-title">Communications</div>
+                <a href="{{ url_for('dashboard_messages', category='all') }}" class="nav-link {% if request.endpoint == 'dashboard_messages' %}active{% endif %}">
+                    <i class="fas fa-envelope-open-text"></i>
+                    <span>Inbox</span>
+                </a>
+                <a href="{{ url_for('dashboard_internal_messages') }}" class="nav-link {% if request.endpoint == 'dashboard_internal_messages' %}active{% endif %}">
+                    <i class="fas fa-comments text-info"></i>
+                    <span class="text-info">Internal messages</span>
+                </a>
+                {% else %}
+                <div class="nav-section-title">Professional Path</div>
+                <a href="{{ url_for('dashboard_general') }}" class="nav-link {% if request.endpoint == 'dashboard_general' %}active{% endif %}">
+                    <i class="fas fa-id-card"></i>
+                    <span>Identity</span>
+                </a>
+                <a href="{{ url_for('dashboard_about') }}" class="nav-link {% if request.endpoint == 'dashboard_about' %}active{% endif %}">
+                    <i class="fas fa-user-tie"></i>
+                    <span>Proposition</span>
+                </a>
+                <a href="{{ url_for('dashboard_skills') }}" class="nav-link {% if request.endpoint == 'dashboard_skills' %}active{% endif %}">
+                    <i class="fas fa-brain"></i>
+                    <span>Competencies</span>
+                </a>
+                <a href="{{ url_for('dashboard_projects') }}" class="nav-link {% if request.endpoint in ['dashboard_projects', 'dashboard_add_project', 'dashboard_edit_project'] %}active{% endif %}">
+                    <i class="fas fa-briefcase"></i>
+                    <span>Gallery</span>
+                </a>
+                <a href="{{ url_for('dashboard_contact') }}" class="nav-link {% if request.endpoint == 'dashboard_contact' %}active{% endif %}">
+                    <i class="fas fa-address-book"></i>
+                    <span>Contact Info</span>
+                </a>
+
+                <div class="nav-section-title">Operations</div>
+                <a href="{{ url_for('dashboard_clients') }}" class="nav-link {% if request.endpoint == 'dashboard_clients' %}active{% endif %}">
+                    <i class="fas fa-users"></i>
+                    <span>CRM</span>
+                    {% if session.get('is_demo_mode') %}<i class="fas fa-lock ms-auto small opacity-50"></i>{% endif %}
+                </a>
+                <a href="{{ url_for('dashboard_messages', category='all') }}" class="nav-link {% if request.endpoint == 'dashboard_messages' %}active{% endif %}">
+                    <i class="fas fa-envelope-open-text"></i>
+                    <span>Inbox</span>
+                </a>
+                <a href="{{ url_for('dashboard_internal_messages') }}" class="nav-link {% if request.endpoint == 'dashboard_internal_messages' %}active{% endif %}">
+                    <i class="fas fa-comments text-info"></i>
+                    <span class="text-info">Internal messages</span>
+                </a>
+                <a href="{{ url_for('dashboard_social') }}" class="nav-link {% if request.endpoint == 'dashboard_social' %}active{% endif %}">
+                    <i class="fas fa-hashtag"></i>
+                    <span>Channels</span>
+                </a>
+                {% endif %}
+                <div class="nav-section-title">Preference</div>
+                <a href="{{ url_for('dashboard_settings') }}" class="nav-link {% if request.endpoint == 'dashboard_settings' %}active{% endif %}">
+                    <i class="fas fa-sliders-h"></i>
+                    <span>Global Settings</span>
+                </a>
+                <a href="{{ url_for('access_instructions') }}" class="nav-link {% if request.endpoint == 'access_instructions' %}active{% endif %}">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Access Standards</span>
+                </a>
+            </nav>
+        </div>
+
+        <div class="sidebar-footer">
+            <a href="{{ url_for('dashboard_logout') }}" class="nav-link text-danger">
+                <i class="fas fa-power-off"></i>
+                <span>Sign Out</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+        <header class="top-navbar">
+            <div class="d-flex align-items-center">
+                <button class="btn btn-link text-white d-lg-none me-3 p-0" onclick="toggleSidebar()">
+                    <i class="fas fa-bars fa-lg"></i>
+                </button>
+                <h6 class="mb-0 fw-600 opacity-75">Welcome, {{ session.get('username') }}</h6>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+                <div class="dropdown" id="notificationDropdown">
+                    <button class="btn btn-sm btn-outline-light border-0 opacity-75 position-relative" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="notificationBell">
+                        <i class="fas fa-bell"></i>
+                        {% set unread = get_unread_messages_count() %}
+                        {% if unread > 0 %}
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger notification-badge" style="font-size: 0.6rem; padding: 0.25em 0.4em;">
+                            {{ unread }}
+                        </span>
+                        {% endif %}
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end p-0 shadow-lg border-0 bg-dark" style="width: 320px; border-radius: 15px; overflow: hidden;">
+                        <div class="p-3 border-bottom border-secondary d-flex justify-content-between align-items-center">
+                            <h6 class="mb-0 fw-bold gold-text">Notifications</h6>
+                            <a href="{{ url_for('dashboard_messages') }}" class="small text-muted text-decoration-none">View All</a>
+                        </div>
+                        <div id="notificationList" class="overflow-auto" style="max-height: 400px;">
+                            <div class="p-4 text-center text-muted">
+                                <i class="fas fa-bell-slash fa-2x mb-2 opacity-25"></i>
+                                <p class="small mb-0">Loading notifications...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a href="{{ url_for('catalog') }}" class="btn btn-sm btn-outline-light border-0 opacity-75" title="Catalog">
+                    <i class="fas fa-book-open"></i>
+                </a>
+                {% if session.get('is_admin') %}
+                <a href="{{ url_for('landing') }}" class="btn btn-sm btn-outline-gold px-3 shadow-sm custom-btn-glow">
+                    <i class="fas fa-globe me-2"></i>Live Site
+                </a>
+                {% else %}
+                <a href="{{ url_for('user_portfolio', username=session.get('username')) }}" target="_blank" class="btn btn-sm btn-outline-gold px-3 shadow-sm custom-btn-glow">
+                    <i class="fas fa-external-link-alt me-2"></i>My Portfolio
+                </a>
+                {% endif %}
+            </div>
+        </header>
+
+        <main class="content-body">
+            {% if is_demo_mode %}
+            <div class="alert alert-warning border-0 shadow-sm mb-4 py-3" style="background: rgba(212, 175, 55, 0.08); border-radius: 15px;">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-graduation-cap me-3 fs-4 text-warning"></i>
+                    <div>
+                        <strong class="text-warning">Training Phase Active</strong>
+                        <p class="mb-0 small opacity-75">Complete all sections in your Professional Path to qualify for verification and full platform access.</p>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ 'success' if category == 'success' else 'danger' }} alert-dismissible fade show" role="alert" style="border-radius: 12px;">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <div class="page-title-section">
+                <h1 class="text-white">{% block page_title %}Dashboard{% endblock %}</h1>
+                {% block breadcrumb %}{% endblock %}
+            </div>
+
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function toggleSidebar() {
+            document.querySelector('.sidebar').classList.toggle('show');
+        }
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', function(event) {
+            const sidebar = document.querySelector('.sidebar');
+            const toggleBtn = document.querySelector('[onclick="toggleSidebar()"]');
+
+            if (window.innerWidth <= 768 && !sidebar.contains(event.target) && toggleBtn && !toggleBtn.contains(event.target)) {
+                sidebar.classList.remove('show');
+            }
+        });
+
+        // Real-time Notification System
+        let lastUnreadCount = 0;
+
+        function updateNotifications() {
+            fetch('/dashboard/notifications/latest')
+                .then(response => response.json())
+                .then(data => {
+                    const list = document.getElementById('notificationList');
+                    const badgeContainer = document.querySelector('.notification-badge');
+                    const bellBtn = document.getElementById('notificationBell');
+                    
+                    // Update badge and count
+                    const unreadCount = data.length;
+                    if (unreadCount > 0) {
+                        if (badgeContainer) {
+                            badgeContainer.textContent = unreadCount;
+                            badgeContainer.style.display = 'block';
+                        } else {
+                            // Create badge if missing
+                            const badge = document.createElement('span');
+                            badge.className = 'position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger notification-badge';
+                            badge.style.cssText = 'font-size: 0.6rem; padding: 0.25em 0.4em;';
+                            badge.textContent = unreadCount;
+                            bellBtn.appendChild(badge);
+                        }
+                        
+                        // Alert sound or visual hint if count increased
+                        if (unreadCount > lastUnreadCount) {
+                            bellBtn.classList.add('animate-bounce');
+                            setTimeout(() => bellBtn.classList.remove('animate-bounce'), 1000);
+                        }
+                    } else if (badgeContainer) {
+                        badgeContainer.style.display = 'none';
+                    }
+                    lastUnreadCount = unreadCount;
+
+                        // Update the dropdown list content
+                        if (data.length === 0) {
+                            list.innerHTML = '<div class="p-4 text-center text-muted"><p class="small mb-0">No new messages</p></div>';
+                            return;
+                        }
+
+                        list.innerHTML = '';
+                        data.forEach(msg => {
+                            const item = document.createElement('a');
+                            // Use absolute paths and consistent routing - link to THREAD ID
+                            const targetId = msg.thread_id || msg.id;
+                            const viewUrl = msg.category === 'internal' ? `/dashboard/messages/internal/view/${targetId}` : `/dashboard/messages/view/${targetId}`;
+                            item.href = viewUrl;
+                            item.className = 'dropdown-item p-3 border-bottom border-secondary d-flex gap-3 align-items-start text-wrap';
+                            
+                            let icon = 'fa-briefcase text-success';
+                            if (msg.category === 'internal') icon = 'fa-reply-all text-info';
+                            if (msg.category === 'platform') icon = 'fa-university text-primary';
+                        
+                        item.innerHTML = `
+                            <div class="avatar-sm bg-dark rounded-circle d-flex align-items-center justify-content-center border border-secondary flex-shrink-0" style="width: 32px; height: 32px;">
+                                <i class="fas ${icon}" style="font-size: 0.9rem;"></i>
+                            </div>
+                            <div class="flex-grow-1 min-width-0">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <strong class="text-white small d-block text-truncate">${msg.name}</strong>
+                                    <small class="text-muted" style="font-size: 0.65rem;">${msg.time}</small>
+                                </div>
+                                <p class="text-muted small mb-0 text-truncate" style="max-width: 200px;">${msg.message}</p>
+                            </div>
+                        `;
+                        list.appendChild(item);
+                    });
+                })
+                .catch(err => console.error('Notification error:', err));
+        }
+
+        // Poll every 30 seconds for real-time updates
+        setInterval(updateNotifications, 30000);
+        // Initial load
+        updateNotifications();
+
+        // Optional: Manual refresh on bell click
+        document.getElementById('notificationBell').addEventListener('click', updateNotifications);
+    </script>
+</body>
+</html>

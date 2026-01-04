@@ -1,0 +1,458 @@
+{
+  "name": "Demo Portfolio - Codexx",
+  "title": "Web Developer & Designer",
+  "description": "Experience the power of Codexx Academy Platform with this interactive demo",
+  "photo": "static/assets/profile-placeholder.svg",
+  "about": "Welcome to the Codexx Academy Platform! This is a live demo showcasing all the features available in our professional portfolio management system. Feel free to explore and customize this demo to see how your portfolio would look.",
+  "skills": [
+    {
+      "name": "Web Development",
+      "level": 90
+    },
+    {
+      "name": "UI/UX Design",
+      "level": 85
+    },
+    {
+      "name": "JavaScript",
+      "level": 88
+    },
+    {
+      "name": "React.js",
+      "level": 85
+    },
+    {
+      "name": "Python",
+      "level": 80
+    }
+  ],
+  "projects": [],
+  "contact": {
+    "email": "demo@codexx.com",
+    "phone": "+1 234 567 8900",
+    "location": "San Francisco, CA"
+  },
+  "social": {},
+  "messages": [],
+  "visitors": {
+    "total": 0,
+    "today": [],
+    "unique_ips": []
+  },
+  "settings": {
+    "theme": "luxury-gold"
+  },
+  "clients": [],
+  "users": [
+    {
+      "id": 1,
+      "username": "Codexx",
+      "password_hash": "scrypt:32768:8:1$nrWFHdckDVIfV3HI$e93d200277188286e6387879fb86c7332a34d6e58e56795a962c2ed54bc3ff6593877e9aba4a0a8e81435f44ace5fd5b94c3fd4f91740015199847dd05a7eff3",
+      "email": "Raesondark@gmail.com",
+      "role": "user",
+      "is_demo": false,
+      "created_at": "2026-01-03 13:35:41"
+    },
+    {
+      "id": 2,
+      "username": "Raeson",
+      "password_hash": "scrypt:32768:8:1$TRiCeZPXBW2KiFGD$46927bcffa4b797e10a68b688259df4e7ad383cee82718101d94142b7414f6e914318cb7fd4ecaef0a43d5ce15f4bab4fbd79d2aca053f8cdfb8a1ca59394649",
+      "email": "sarah@example.com",
+      "role": "user",
+      "is_demo": false,
+      "created_at": "2026-01-04 16:45:21"
+    }
+  ],
+  "portfolios": {
+    "sarah_stratege": {
+      "username": "sarah_stratege",
+      "name": "Sarah Chen",
+      "title": "Global Strategy Director",
+      "description": "Strategic business consultant focused on digital transformation.",
+      "about": "Driving growth through data-backed insights and revolutionary corporate strategies.",
+      "photo": "/static/images/profiles/sarah.png",
+      "skills": [
+        {
+          "name": "Business Strategy",
+          "level": 98
+        },
+        {
+          "name": "Market Analysis",
+          "level": 92
+        }
+      ],
+      "projects": [
+        {
+          "title": "Market Expansion",
+          "description": "Growth strategy for emerging markets.",
+          "image": "/static/images/projects/growth_roadmap.png"
+        },
+        {
+          "title": "Digital Transformation",
+          "description": "Modernizing legacy operations.",
+          "image": "/static/images/projects/urban_park.png"
+        },
+        {
+          "title": "ESG Strategy",
+          "description": "Sustainability framework development.",
+          "image": "/static/images/projects/cloud_infra.png"
+        }
+      ],
+      "settings": {
+        "theme": "luxury-gold"
+      },
+      "contact": {
+        "email": "sarah@codexx.academy",
+        "phone": "+1 555 987 6543",
+        "location": "Singapore"
+      },
+      "social": {
+        "linkedin": "sarahchen",
+        "github": "sarahstrat",
+        "twitter": "sarah_biz"
+      }
+    },
+    "marcus_builds": {
+      "username": "marcus_builds",
+      "name": "Marcus Thorne",
+      "title": "Principal Architect",
+      "description": "Award-winning architect focused on sustainable urban design.",
+      "about": "Designing the future of cities with a focus on ecology and community well-being.",
+      "photo": "/static/images/profiles/marcus.png",
+      "skills": [
+        {
+          "name": "Sustainable Design",
+          "level": 96
+        },
+        {
+          "name": "Urban Planning",
+          "level": 88
+        }
+      ],
+      "projects": [
+        {
+          "title": "Eco-Park Design",
+          "description": "Sustainable city green space.",
+          "image": "/static/images/projects/urban_park.png"
+        },
+        {
+          "title": "Skyline Eco-Tower",
+          "description": "Carbon-neutral residential high-rise.",
+          "image": "/static/images/projects/site_plan.png"
+        },
+        {
+          "title": "Modular Living",
+          "description": "Sustainable housing solutions.",
+          "image": "/static/images/projects/api_gateway.png"
+        }
+      ],
+      "settings": {
+        "theme": "luxury-gold"
+      },
+      "contact": {
+        "email": "marcus@codexx.academy",
+        "phone": "+1 555 444 3322",
+        "location": "Berlin, Germany"
+      },
+      "social": {
+        "linkedin": "marcusthorne",
+        "github": "marcusarch",
+        "twitter": "marcus_builds"
+      }
+    },
+    "admin": {
+      "name": "admin",
+      "title": "Web Developer & Designer",
+      "description": "Welcome to my professional portfolio.",
+      "skills": [],
+      "projects": [],
+      "messages": [],
+      "clients": [],
+      "settings": {
+        "theme": "terracotta-red"
+      },
+      "visitors": {
+        "total": 0,
+        "today": [],
+        "unique_ips": []
+      },
+      "notifications": {
+        "telegram": {
+          "bot_token": "8542217583:AAHiduNVU7kLFT5A_26NskcCUoYeTYSEQOE",
+          "chat_id": "5464520756",
+          "configured_at": "2026-01-03 13:21:38"
+        }
+      }
+    },
+    "Codexx": {
+      "username": "Codexx",
+      "name": "",
+      "title": "",
+      "description": "",
+      "about": "",
+      "photo": "",
+      "skills": [],
+      "projects": [],
+      "messages": [
+        {
+          "id": "b41aebd5-c451-4b19-9a7b-45dcf6979c10",
+          "name": "GarrenSY",
+          "email": "Raesonrs@gmail.com",
+          "message": "Request Type: service\nInterest Area: design\nSeriousness: inquiry\nPreferred Contact: email\n\nMessage: Message must be at least 10 characters",
+          "date": "2026-01-03 14:54:41",
+          "read": false,
+          "category": "portfolio"
+        },
+        {
+          "id": "c9d3f656-5e8e-4808-97d5-db1110c8678c",
+          "name": "COEX",
+          "email": "Raesonrs@gmail.com",
+          "message": "Request Type: service\nInterest Area: development\nSeriousness: inquiry\nPreferred Contact: email\n\nMessage:  We respect your privacy. Your information will only be used to respond to your inquiry. ",
+          "date": "2026-01-03 14:59:07",
+          "read": true,
+          "category": "portfolio"
+        },
+        {
+          "id": "6d641d6e-a248-4079-bdf0-c44cdf89ff9b",
+          "name": "Garre",
+          "email": "Raesonrs@gmail.com",
+          "message": "Request Type: service\nInterest Area: development\nSeriousness: soon\nPreferred Contact: email\n\nMessage:  We respect your privacy. Your information will only be used to respond to your inquiry. ",
+          "date": "2026-01-03 15:03:53",
+          "read": true,
+          "category": "portfolio"
+        },
+        {
+          "id": "a4cca3ef-eb67-4522-bdb0-efeb5b3ed176",
+          "name": "GarrenS",
+          "email": "Vvanessia@outlook.com",
+          "message": "Request Type: service\nInterest Area: design\nSeriousness: soon\nPreferred Contact: email\n\nMessage:  0/500 characters (minimum 10) ",
+          "date": "2026-01-03 15:06:16",
+          "read": false,
+          "category": "portfolio"
+        }
+      ],
+      "clients": [],
+      "contact": {
+        "email": "",
+        "phone": "",
+        "location": ""
+      },
+      "social": {
+        "linkedin": "",
+        "github": "",
+        "twitter": ""
+      },
+      "settings": {
+        "theme": "luxury-gold"
+      },
+      "visitors": {
+        "total": 5,
+        "today": [
+          {
+            "ip": "105.235.128.200, 10.83.5.121",
+            "timestamp": "2026-01-03 13:56:44",
+            "date": "2026-01-03"
+          },
+          {
+            "ip": "105.235.128.200, 10.83.5.121",
+            "timestamp": "2026-01-03 13:56:53",
+            "date": "2026-01-03"
+          },
+          {
+            "ip": "105.235.128.200, 10.83.2.115",
+            "timestamp": "2026-01-03 13:57:32",
+            "date": "2026-01-03"
+          },
+          {
+            "ip": "105.235.128.200, 10.83.2.115",
+            "timestamp": "2026-01-03 14:27:04",
+            "date": "2026-01-03"
+          },
+          {
+            "ip": "105.235.128.200, 10.83.2.115",
+            "timestamp": "2026-01-03 14:27:14",
+            "date": "2026-01-03"
+          },
+          {
+            "ip": "105.235.128.200, 10.83.3.104",
+            "timestamp": "2026-01-03 14:27:40",
+            "date": "2026-01-03"
+          },
+          {
+            "ip": "105.235.128.200, 10.83.11.57",
+            "timestamp": "2026-01-03 14:37:59",
+            "date": "2026-01-03"
+          },
+          {
+            "ip": "105.235.128.200, 10.83.4.152",
+            "timestamp": "2026-01-03 14:40:55",
+            "date": "2026-01-03"
+          },
+          {
+            "ip": "105.235.128.200, 10.83.11.57",
+            "timestamp": "2026-01-03 14:44:54",
+            "date": "2026-01-03"
+          },
+          {
+            "ip": "105.235.128.200, 10.83.4.152",
+            "timestamp": "2026-01-03 14:44:56",
+            "date": "2026-01-03"
+          },
+          {
+            "ip": "105.235.128.200, 10.83.4.152",
+            "timestamp": "2026-01-03 14:45:18",
+            "date": "2026-01-03"
+          },
+          {
+            "ip": "105.235.128.200, 10.83.2.115",
+            "timestamp": "2026-01-03 14:47:12",
+            "date": "2026-01-03"
+          },
+          {
+            "ip": "105.235.128.200, 10.83.2.115",
+            "timestamp": "2026-01-03 14:48:53",
+            "date": "2026-01-03"
+          },
+          {
+            "ip": "105.235.128.200, 10.83.4.152",
+            "timestamp": "2026-01-03 14:49:38",
+            "date": "2026-01-03"
+          },
+          {
+            "ip": "105.235.128.200, 10.83.2.115",
+            "timestamp": "2026-01-03 14:49:59",
+            "date": "2026-01-03"
+          },
+          {
+            "ip": "105.235.128.200, 10.83.4.152",
+            "timestamp": "2026-01-03 14:50:51",
+            "date": "2026-01-03"
+          },
+          {
+            "ip": "105.235.128.200, 10.83.4.152",
+            "timestamp": "2026-01-03 14:54:09",
+            "date": "2026-01-03"
+          },
+          {
+            "ip": "105.235.128.200, 10.83.2.115",
+            "timestamp": "2026-01-03 14:54:16",
+            "date": "2026-01-03"
+          },
+          {
+            "ip": "105.235.128.200, 10.83.4.152",
+            "timestamp": "2026-01-03 14:54:41",
+            "date": "2026-01-03"
+          },
+          {
+            "ip": "105.235.128.200, 10.83.5.121",
+            "timestamp": "2026-01-03 14:58:47",
+            "date": "2026-01-03"
+          },
+          {
+            "ip": "105.235.128.200, 10.83.2.115",
+            "timestamp": "2026-01-03 14:59:07",
+            "date": "2026-01-03"
+          },
+          {
+            "ip": "105.235.128.200, 10.83.2.115",
+            "timestamp": "2026-01-03 15:03:03",
+            "date": "2026-01-03"
+          },
+          {
+            "ip": "105.235.128.200, 10.83.2.115",
+            "timestamp": "2026-01-03 15:03:54",
+            "date": "2026-01-03"
+          },
+          {
+            "ip": "105.235.128.200, 10.83.3.104",
+            "timestamp": "2026-01-03 15:06:16",
+            "date": "2026-01-03"
+          }
+        ],
+        "unique_ips": [
+          "105.235.128.200, 10.83.2.115",
+          "105.235.128.200, 10.83.11.57",
+          "105.235.128.200, 10.83.5.121",
+          "105.235.128.200, 10.83.3.104",
+          "105.235.128.200, 10.83.4.152"
+        ]
+      },
+      "notifications": {
+        "telegram": {
+          "bot_token": "8115051779:AAFy7tE7gB3rDqwo6uCD3PXpk9eNS3BkByA",
+          "chat_id": "5464520756",
+          "configured_at": "2026-01-03 13:56:26"
+        }
+      }
+    },
+    "Raeson": {
+      "username": "Raeson",
+      "name": "",
+      "title": "",
+      "description": "",
+      "about": "",
+      "photo": "",
+      "skills": [],
+      "projects": [],
+      "messages": [
+        {
+          "id": "deae64de-6408-4cea-980b-815142551bd4",
+          "name": "COEX",
+          "email": "codexxrs@outlook.sa",
+          "message": "Request Type: partnership\nInterest Area: design\nCompany: Xomm\nSeriousness: soon\nPreferred Contact: email\n\nMessage: Hi how are you",
+          "date": "2026-01-04 16:51:07",
+          "read": true,
+          "category": "portfolio"
+        },
+        {
+          "id": "e8a61ec7-a702-4360-a6fb-509e2d07629e",
+          "name": "Raeson",
+          "email": "raesonrs@gmail.com",
+          "message": "Request Type: service\nInterest Area: design\nCompany: Xomm\nSeriousness: soon\nPreferred Contact: email\n\nMessage:  We respect your privacy. Your information will only be used to respond to your inquiry. ",
+          "date": "2026-01-04 17:03:53",
+          "read": true,
+          "category": "portfolio"
+        }
+      ],
+      "clients": [],
+      "contact": {
+        "email": "",
+        "phone": "",
+        "location": ""
+      },
+      "social": {
+        "linkedin": "",
+        "github": "",
+        "twitter": ""
+      },
+      "settings": {
+        "theme": "luxury-gold"
+      },
+      "visitors": {
+        "total": 3,
+        "today": [
+          {
+            "ip": "105.235.132.66, 10.83.0.252",
+            "timestamp": "2026-01-04 16:49:59",
+            "date": "2026-01-04"
+          },
+          {
+            "ip": "105.235.132.66, 10.83.3.203",
+            "timestamp": "2026-01-04 16:51:07",
+            "date": "2026-01-04"
+          },
+          {
+            "ip": "105.235.132.66, 10.83.7.181",
+            "timestamp": "2026-01-04 17:03:53",
+            "date": "2026-01-04"
+          }
+        ],
+        "unique_ips": [
+          "105.235.132.66, 10.83.7.181",
+          "105.235.132.66, 10.83.0.252",
+          "105.235.132.66, 10.83.3.203"
+        ]
+      }
+    }
+  }
+}

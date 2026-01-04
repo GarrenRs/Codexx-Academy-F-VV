@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" data-portfolio-theme="{{ current_theme }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ project.title }} - {{ data.name }} Portfolio</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='themes/' + current_theme + '.css') }}">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+    <style>
+        .project-detail-hero {
+            padding: 140px 0 80px;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            position: relative;
+        }
+        
+        .project-meta-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 30px;
+            height: 100%;
+            box-shadow: var(--shadow);
+        }
+        
+        .project-main-image {
+            border-radius: 24px;
+            box-shadow: var(--shadow-lg);
+            border: 8px solid rgba(212, 175, 55, 0.05);
+            width: 100%;
+            max-height: 500px;
+            object-fit: cover;
+        }
+        
+        .tech-pill {
+            display: inline-block;
+            padding: 8px 16px;
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--primary-color);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin: 0 8px 8px 0;
+        }
+        
+        .content-box {
+            line-height: 1.8;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+        
+        .back-nav {
+            margin-bottom: 20px;
+        }
+        
+        .back-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .back-nav a:hover {
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body data-portfolio-theme="{{ current_theme }}">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand fw-bold d-flex align-items-center" href="/portfolio/{{ data.username }}">
+                <img src="{{ url_for('static', filename='logo/logo.png') }}" alt="Codexx Academy Logo" height="45" class="me-2">
+                <div class="brand-text">
+                    <span class="d-block lh-1">Codexx Academy</span>
+                    <small class="d-block opacity-75" style="font-size: 0.65rem; letter-spacing: 1px;">ELITE PORTFOLIO</small>
+                </div>
+            </a>
+            <div class="ms-auto">
+                <a href="/portfolio/{{ data.username }}" class="btn btn-outline-primary btn-sm rounded-pill px-4">
+                    <i class="fas fa-arrow-left me-2"></i>Back to Portfolio
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="project-detail-hero">
+        <div class="container">
+            <div class="back-nav">
+                <a href="/portfolio/{{ data.username }}#projects">
+                    <i class="fas fa-chevron-left me-2"></i>Back to Case Studies
+                </a>
+            </div>
+            
+            <div class="row g-5">
+                <div class="col-lg-7">
+                    <h1 class="display-4 fw-bold mb-4">{{ project.title }}</h1>
+                    <div class="hero-badge mb-4 d-inline-block px-3 py-1 rounded-pill" style="background: rgba(40, 167, 69, 0.1); color: #28a745; border: 1px solid rgba(40, 167, 69, 0.2); box-shadow: 0 0 15px rgba(40, 167, 69, 0.1);">
+                        <i class="fas fa-shield-alt me-2"></i>Verified Case Study
+                    </div>
+                    
+                    <div class="mb-5">
+                        {% if project.image and (project.image.startswith('static/') or project.image.startswith('attached_assets/')) %}
+                            <img src="{{ url_for('static', filename=project.image.replace('static/', '')) if project.image.startswith('static/') else project.image }}" alt="{{ project.title }}" class="project-main-image">
+                        {% else %}
+                            <img src="{{ project.image or url_for('static', filename='assets/project-placeholder.svg') }}" alt="{{ project.title }}" class="project-main-image">
+                        {% endif %}
+                    </div>
+                    
+                    <div class="project-content-formatted content-box">
+                        {{ (project.content or project.description)|safe }}
+                    </div>
+                </div>
+                
+                <div class="col-lg-5">
+                    <div class="project-meta-card sticky-top" style="top: 100px;">
+                        <h4 class="mb-4 fw-bold">Project Intelligence</h4>
+                        
+                        <div class="mb-4">
+                            <label class="text-muted small text-uppercase fw-bold mb-2 d-block">Core Objective</label>
+                            <p class="mb-0">{{ project.short_description or 'Professional execution of technical requirements to deliver high-impact results.' }}</p>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="text-muted small text-uppercase fw-bold mb-3 d-block">Technology Stack</label>
+                            <div class="tech-stack">
+                                {% if project.technologies %}
+                                    {% for tech in project.technologies %}
+                                        <span class="tech-pill">{{ tech }}</span>
+                                    {% endfor %}
+                                {% else %}
+                                    <span class="text-muted">General Development Stack</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid gap-3">
+                            {% if project.demo_url and project.demo_url != '#' %}
+                            <a href="{{ project.demo_url }}" target="_blank" class="btn btn-primary btn-lg rounded-pill">
+                                <i class="fas fa-external-link-alt me-2"></i>Launch Live Preview
+                            </a>
+                            {% endif %}
+                            
+                            {% if project.github_url and project.github_url != '#' %}
+                            <a href="{{ project.github_url }}" target="_blank" class="btn btn-outline-primary btn-lg rounded-pill">
+                                <i class="fab fa-github me-2"></i>Review Source Code
+                            </a>
+                            {% endif %}
+                            
+                            <a href="/portfolio/{{ data.username }}#contact" class="btn btn-dark btn-lg rounded-pill">
+                                <i class="fas fa-paper-plane me-2"></i>Discuss Project
+                            </a>
+                        </div>
+                        
+                        {% if data.projects and data.projects|length > 1 %}
+                        <div class="mt-5 pt-4 border-top">
+                            <h6 class="text-muted small text-uppercase fw-bold mb-3">Other Evidence</h6>
+                            <div class="other-projects">
+                                {% for other in data.projects %}
+                                    {% if other.id != project.id %}
+                                    <a href="/portfolio/{{ data.username }}/project/{{ other.id }}" class="d-flex align-items-center p-2 rounded hover-bg-light text-decoration-none mb-2 border">
+                                        {% if other.image and (other.image.startswith('static/') or other.image.startswith('attached_assets/')) %}
+                                            <img src="{{ url_for('static', filename=other.image.replace('static/', '')) if other.image.startswith('static/') else other.image }}" style="width: 40px; height: 40px; object-fit: cover;" class="rounded me-3">
+                                        {% else %}
+                                            <img src="{{ other.image or url_for('static', filename='assets/project-placeholder.svg') }}" style="width: 40px; height: 40px; object-fit: cover;" class="rounded me-3">
+                                        {% endif %}
+                                        <span class="text-primary small fw-bold">{{ other.title }}</span>
+                                    </a>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-section py-5 mt-5">
+        <div class="container text-center">
+            <p class="mb-0 text-muted">&copy; 2026 Codexx Academy. Built for Builders.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
