@@ -191,47 +191,32 @@
       "description": "",
       "about": "",
       "photo": "",
-      "skills": [],
-      "projects": [],
-      "messages": [
+      "skills": [
         {
-          "id": "b41aebd5-c451-4b19-9a7b-45dcf6979c10",
-          "name": "GarrenSY",
-          "email": "Raesonrs@gmail.com",
-          "message": "Request Type: service\nInterest Area: design\nSeriousness: inquiry\nPreferred Contact: email\n\nMessage: Message must be at least 10 characters",
-          "date": "2026-01-03 14:54:41",
-          "read": false,
-          "category": "portfolio"
-        },
-        {
-          "id": "c9d3f656-5e8e-4808-97d5-db1110c8678c",
-          "name": "COEX",
-          "email": "Raesonrs@gmail.com",
-          "message": "Request Type: service\nInterest Area: development\nSeriousness: inquiry\nPreferred Contact: email\n\nMessage:  We respect your privacy. Your information will only be used to respond to your inquiry. ",
-          "date": "2026-01-03 14:59:07",
-          "read": true,
-          "category": "portfolio"
-        },
-        {
-          "id": "6d641d6e-a248-4079-bdf0-c44cdf89ff9b",
-          "name": "Garre",
-          "email": "Raesonrs@gmail.com",
-          "message": "Request Type: service\nInterest Area: development\nSeriousness: soon\nPreferred Contact: email\n\nMessage:  We respect your privacy. Your information will only be used to respond to your inquiry. ",
-          "date": "2026-01-03 15:03:53",
-          "read": true,
-          "category": "portfolio"
-        },
-        {
-          "id": "a4cca3ef-eb67-4522-bdb0-efeb5b3ed176",
-          "name": "GarrenS",
-          "email": "Vvanessia@outlook.com",
-          "message": "Request Type: service\nInterest Area: design\nSeriousness: soon\nPreferred Contact: email\n\nMessage:  0/500 characters (minimum 10) ",
-          "date": "2026-01-03 15:06:16",
-          "read": false,
-          "category": "portfolio"
+          "name": "Photoshopd",
+          "level": 81
         }
       ],
-      "clients": [],
+      "projects": [],
+      "messages": [],
+      "clients": [
+        {
+          "id": 1,
+          "name": "Dark Raeson",
+          "email": "raesondark@gmail.com",
+          "phone": "0549990984",
+          "company": "Fzlz",
+          "project_title": "uyya",
+          "project_description": "Project Description",
+          "status": "delivered",
+          "price": "45",
+          "deadline": "2026-01-06",
+          "start_date": "2026-01-09",
+          "notes": "Workflow Status *",
+          "created_at": "2026-01-05 19:10:10",
+          "status_updated_at": "2026-01-05 19:12:32"
+        }
+      ],
       "contact": {
         "email": "",
         "phone": "",

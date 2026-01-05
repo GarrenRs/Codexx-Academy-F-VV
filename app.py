@@ -2577,13 +2577,18 @@ def dashboard_skills():
         skill_levels = request.form.getlist('skill_level[]')
 
         for name, level in zip(skill_names, skill_levels):
-            if name.strip():
+            name_clean = name.strip()
+            if name_clean:
+                try:
+                    level_int = int(level)
+                    if not (0 <= level_int <= 100):
+                        level_int = 0
+                except (ValueError, TypeError):
+                    level_int = 0
+                    
                 skills.append({
-                    'name':
-                    name.strip(),
-                    'level':
-                    int(level)
-                    if level.isdigit() and 0 <= int(level) <= 100 else 0
+                    'name': name_clean,
+                    'level': level_int
                 })
 
         data['skills'] = skills
@@ -2626,7 +2631,7 @@ def dashboard_add_project():
                 image_path = f"static/assets/uploads/{filename}"
 
         technologies = [
-            tech.strip() for tech in request.form.getlist('technologies[]')
+            tech.strip()[:50] for tech in request.form.getlist('technologies[]')
             if tech.strip()
         ]
         short_desc = request.form.get('short_description', '').strip()
@@ -2634,13 +2639,13 @@ def dashboard_add_project():
 
         new_project = {
             'id': new_id,
-            'title': request.form.get('title', '').strip(),
-            'short_description': short_desc,
+            'title': request.form.get('title', '').strip()[:200],
+            'short_description': short_desc[:500],
             'content': full_content,
-            'description': short_desc,
+            'description': short_desc[:500],
             'image': image_path,
-            'demo_url': request.form.get('demo_url', '').strip() or '#',
-            'github_url': request.form.get('github_url', '').strip() or '#',
+            'demo_url': request.form.get('demo_url', '').strip()[:500] or '#',
+            'github_url': request.form.get('github_url', '').strip()[:500] or '#',
             'technologies': technologies
         }
 
@@ -2675,13 +2680,13 @@ def dashboard_edit_project(project_id):
         short_desc = request.form.get('short_description', '').strip()
         full_content = request.form.get('content', '').strip()
 
-        project['title'] = request.form.get('title', '').strip()
-        project['short_description'] = short_desc
+        project['title'] = request.form.get('title', '').strip()[:200]
+        project['short_description'] = short_desc[:500]
         project['content'] = full_content
-        project['description'] = short_desc
-        project['demo_url'] = request.form.get('demo_url', '').strip() or '#'
+        project['description'] = short_desc[:500]
+        project['demo_url'] = request.form.get('demo_url', '').strip()[:500] or '#'
         project['github_url'] = request.form.get('github_url',
-                                                 '').strip() or '#'
+                                                 '').strip()[:500] or '#'
 
         if 'image' in request.files:
             file = request.files['image']
@@ -2692,7 +2697,7 @@ def dashboard_edit_project(project_id):
                 project['image'] = f"static/assets/uploads/{filename}"
 
         project['technologies'] = [
-            tech.strip() for tech in request.form.getlist('technologies[]')
+            tech.strip()[:50] for tech in request.form.getlist('technologies[]')
             if tech.strip()
         ]
 
@@ -2730,9 +2735,9 @@ def dashboard_contact():
         if 'contact' not in data:
             data['contact'] = {}
 
-        data['contact']['email'] = request.form.get('email', '')
-        data['contact']['phone'] = request.form.get('phone', '')
-        data['contact']['location'] = request.form.get('location', '')
+        data['contact']['email'] = request.form.get('email', '')[:100]
+        data['contact']['phone'] = request.form.get('phone', '')[:20]
+        data['contact']['location'] = request.form.get('location', '')[:200]
 
         save_data(data, username=username)
         flash('Contact information saved successfully', 'success')
@@ -2946,7 +2951,7 @@ def dashboard_internal_send():
                 id=str(uuid.uuid4()),
                 name='Admin' if is_admin else username,
                 email='admin@codexx.academy' if is_admin else session.get('email', ''),
-                message=message_content,
+                message=message_content[:5000],  # Content limit
                 is_internal=True,
                 sender_id=user_id,
                 sender_role='admin' if is_admin else 'member',
@@ -2968,7 +2973,7 @@ def dashboard_internal_send():
                 id=str(uuid.uuid4()),
                 name='Admin' if is_admin else username,
                 email='admin@codexx.academy' if is_admin else session.get('email', ''),
-                message=message_content,
+                message=message_content[:5000],  # Content limit
                 is_internal=True,
                 sender_id=user_id,
                 sender_role='admin' if is_admin else 'member',

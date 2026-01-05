@@ -13,27 +13,26 @@
         </h5>
     </div>
     <div class="card-body">
-        <form method="POST" id="skillsForm">
+        <form method="POST" id="skillsForm" action="{{ url_for('dashboard_skills') }}">
             <div id="skillsContainer">
                 {% if data.skills %}
                     {% for skill in data.skills %}
                         <div class="row skill-row mb-3">
                             <div class="col-md-6">
-                                <label class="form-label">Competency / Skill</label>
-                                <input type="text" class="form-control" name="skill_name[]" 
+                                <label class="form-label text-white-50">Competency / Skill</label>
+                                <input type="text" class="form-control bg-dark text-white border-secondary" name="skill_name[]" 
                                        value="{{ skill.name }}" required>
                             </div>
                             <div class="col-md-4">
-                                <label class="form-label">Level (%)</label>
-                                <input type="range" class="form-range" name="skill_level[]" 
-                                       min="0" max="100" value="{{ skill.level }}" 
-                                       oninput="updatePercentage(this)">
-                                <div class="text-center">
-                                    <span class="percentage-display">{{ skill.level }}%</span>
+                                <label class="form-label text-white-50">Level (%)</label>
+                                <input type="range" class="form-range skill-range" name="skill_level[]" 
+                                       min="0" max="100" value="{{ skill.level }}">
+                                <div class="text-center mt-1">
+                                    <span class="percentage-display text-white fw-bold fs-5">{{ skill.level }}%</span>
                                 </div>
                             </div>
                             <div class="col-md-2 d-flex align-items-end">
-                                <button type="button" class="btn btn-danger btn-sm" onclick="removeSkill(this)">
+                                <button type="button" class="btn btn-danger btn-sm remove-skill-btn">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </div>
@@ -42,21 +41,20 @@
                 {% else %}
                     <div class="row skill-row mb-3">
                         <div class="col-md-6">
-                            <label class="form-label">Skill Name</label>
-                            <input type="text" class="form-control" name="skill_name[]" 
+                            <label class="form-label text-white-50">Skill Name</label>
+                            <input type="text" class="form-control bg-dark text-white border-secondary" name="skill_name[]" 
                                    placeholder="e.g., HTML/CSS" required>
                         </div>
                         <div class="col-md-4">
-                            <label class="form-label">Level (%)</label>
-                            <input type="range" class="form-range" name="skill_level[]" 
-                                   min="0" max="100" value="80" 
-                                   oninput="updatePercentage(this)">
-                            <div class="text-center">
-                                <span class="percentage-display">80%</span>
+                            <label class="form-label text-white-50">Level (%)</label>
+                            <input type="range" class="form-range skill-range" name="skill_level[]" 
+                                   min="0" max="100" value="80">
+                            <div class="text-center mt-1">
+                                <span class="percentage-display text-white fw-bold fs-5">80%</span>
                             </div>
                         </div>
                         <div class="col-md-2 d-flex align-items-end">
-                            <button type="button" class="btn btn-danger btn-sm" onclick="removeSkill(this)">
+                            <button type="button" class="btn btn-danger btn-sm remove-skill-btn">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </div>
@@ -65,7 +63,7 @@
             </div>
             
             <div class="mb-3">
-                <button type="button" class="btn btn-success" onclick="addSkill()">
+                <button type="button" class="btn btn-success" id="addSkillBtn">
                     <i class="fas fa-plus me-2"></i>Add New Competency
                 </button>
             </div>
@@ -112,50 +110,81 @@
 
 {% block scripts %}
 <script>
-function addSkill() {
+document.addEventListener('DOMContentLoaded', function() {
     const container = document.getElementById('skillsContainer');
-    const skillRow = document.createElement('div');
-    skillRow.className = 'row skill-row mb-3';
-    skillRow.innerHTML = `
-        <div class="col-md-6">
-            <label class="form-label">Skill Name</label>
-            <input type="text" class="form-control" name="skill_name[]" 
-                   placeholder="e.g., JavaScript" required>
-        </div>
-        <div class="col-md-4">
-            <label class="form-label">Level (%)</label>
-            <input type="range" class="form-range" name="skill_level[]" 
-                   min="0" max="100" value="50" 
-                   oninput="updatePercentage(this)">
-            <div class="text-center">
-                <span class="percentage-display">50%</span>
-            </div>
-        </div>
-        <div class="col-md-2 d-flex align-items-end">
-            <button type="button" class="btn btn-danger btn-sm" onclick="removeSkill(this)">
-                <i class="fas fa-trash"></i>
-            </button>
-        </div>
-    `;
-    container.appendChild(skillRow);
-}
+    const addBtn = document.getElementById('addSkillBtn');
+    const skillsForm = document.getElementById('skillsForm');
 
-function removeSkill(button) {
-    const skillRow = button.closest('.skill-row');
-    skillRow.remove();
+    function updatePercentageDisplay(rangeInput) {
+        const parent = rangeInput.closest('.col-md-4');
+        const display = parent.querySelector('.percentage-display');
+        if (display) {
+            display.textContent = rangeInput.value + '%';
+        }
+        updatePreview();
+    }
+
+    if (addBtn) {
+        addBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const skillRow = document.createElement('div');
+            skillRow.className = 'row skill-row mb-3';
+            skillRow.innerHTML = `
+                <div class="col-md-6">
+                    <label class="form-label text-white-50">Skill Name</label>
+                    <input type="text" class="form-control bg-dark text-white border-secondary" name="skill_name[]" placeholder="e.g., JavaScript" required>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label text-white-50">Level (%)</label>
+                    <input type="range" class="form-range skill-range" name="skill_level[]" min="0" max="100" value="50">
+                    <div class="text-center mt-1">
+                        <span class="percentage-display text-white fw-bold fs-5">50%</span>
+                    </div>
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                    <button type="button" class="btn btn-danger btn-sm remove-skill-btn">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `;
+            container.appendChild(skillRow);
+            updatePreview();
+        });
+    }
+
+    if (container) {
+        container.addEventListener('click', function(e) {
+            const removeBtn = e.target.closest('.remove-skill-btn');
+            if (removeBtn) {
+                e.preventDefault();
+                removeBtn.closest('.skill-row').remove();
+                updatePreview();
+            }
+        });
+
+        container.addEventListener('input', function(e) {
+            if (e.target.classList.contains('skill-range')) {
+                updatePercentageDisplay(e.target);
+            }
+        });
+    }
+
+    if (skillsForm) {
+        skillsForm.addEventListener('input', function(e) {
+            if (!e.target.classList.contains('skill-range')) {
+                updatePreview();
+            }
+        });
+    }
+    
+    // Initial preview
     updatePreview();
-}
-
-function updatePercentage(rangeInput) {
-    const percentageDisplay = rangeInput.parentNode.querySelector('.percentage-display');
-    percentageDisplay.textContent = rangeInput.value + '%';
-}
-
-// Update preview when form changes
-document.getElementById('skillsForm').addEventListener('input', updatePreview);
+});
 
 function updatePreview() {
     const previewContainer = document.getElementById('previewContainer');
+    if (!previewContainer) return;
+
     const skillNames = document.querySelectorAll('input[name="skill_name[]"]');
     const skillLevels = document.querySelectorAll('input[name="skill_level[]"]');
     

@@ -43,9 +43,12 @@ Preferred communication style: Simple, everyday language.
 - **Backup System**: JSON-based backups stored in `backups/` directory with metadata tracking
 
 ### Security Features
+- **Security Headers**: Implemented CSP, X-Frame-Options, HSTS, and X-Content-Type-Options via `add_security_headers` middleware.
+- **Input Sanitization**: Backend-level length constraints on all user portfolio inputs and message content.
 - **IP Activity Logging**: Failed login attempts and security events logged to `security/ip_log.json`
-- **Rate Limiting**: Protection against brute force attacks
-- **Separate Notification Channels**: Admin and user notifications are isolated for privacy
+- **Rate Limiting**: Protection against brute force attacks.
+- **Separate Notification Channels**: Admin and user notifications are isolated for privacy with separate Telegram/SMTP credentials.
+- **CSRF Protection**: Native Flask session management and secure cookie settings.
 
 ## External Dependencies
 

@@ -15,7 +15,7 @@
                 </h5>
             </div>
             <div class="card-body">
-                <form method="POST" enctype="multipart/form-data">
+                <form method="POST" enctype="multipart/form-data" action="{{ url_for('dashboard_edit_project', project_id=project.id) }}">
                     <div class="mb-3">
                         <label for="title" class="form-label">Project Title</label>
                         <input type="text" class="form-control" id="title" name="title" 
@@ -90,25 +90,25 @@
                         <div id="technologiesContainer">
                             {% if project.technologies %}
                                 {% for tech in project.technologies %}
-                                    <div class="input-group mb-2">
+                                    <div class="input-group mb-2 tech-row">
                                         <input type="text" class="form-control" name="technologies[]" 
                                                value="{{ tech }}">
-                                        <button type="button" class="btn btn-outline-danger" onclick="removeTechnology(this)">
+                                        <button type="button" class="btn btn-outline-danger remove-tech-btn">
                                             <i class="fas fa-times"></i>
                                         </button>
                                     </div>
                                 {% endfor %}
                             {% else %}
-                                <div class="input-group mb-2">
+                                <div class="input-group mb-2 tech-row">
                                     <input type="text" class="form-control" name="technologies[]" 
                                            placeholder="e.g., React">
-                                    <button type="button" class="btn btn-outline-danger" onclick="removeTechnology(this)">
+                                    <button type="button" class="btn btn-outline-danger remove-tech-btn">
                                         <i class="fas fa-times"></i>
                                     </button>
                                 </div>
                             {% endif %}
                         </div>
-                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="addTechnology()">
+                        <button type="button" class="btn btn-outline-primary btn-sm" id="addTechBtn">
                             <i class="fas fa-plus me-1"></i>Add Technology
                         </button>
                     </div>
@@ -172,23 +172,34 @@
 
 {% block scripts %}
 <script>
-function addTechnology() {
+document.addEventListener('DOMContentLoaded', function() {
     const container = document.getElementById('technologiesContainer');
-    const inputGroup = document.createElement('div');
-    inputGroup.className = 'input-group mb-2';
-    inputGroup.innerHTML = `
-        <input type="text" class="form-control" name="technologies[]" 
-               placeholder="e.g., JavaScript">
-        <button type="button" class="btn btn-outline-danger" onclick="removeTechnology(this)">
-            <i class="fas fa-times"></i>
-        </button>
-    `;
-    container.appendChild(inputGroup);
-}
+    const addBtn = document.getElementById('addTechBtn');
 
-function removeTechnology(button) {
-    const inputGroup = button.closest('.input-group');
-    inputGroup.remove();
-}
+    if (addBtn) {
+        addBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const div = document.createElement('div');
+            div.className = 'input-group mb-2 tech-row';
+            div.innerHTML = `
+                <input type="text" class="form-control bg-dark text-white border-secondary" name="technologies[]" placeholder="e.g., JavaScript">
+                <button type="button" class="btn btn-outline-danger remove-tech-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    if (container) {
+        container.addEventListener('click', function(e) {
+            const removeBtn = e.target.closest('.remove-tech-btn');
+            if (removeBtn) {
+                e.preventDefault();
+                removeBtn.closest('.tech-row').remove();
+            }
+        });
+    }
+});
 </script>
 {% endblock %}
