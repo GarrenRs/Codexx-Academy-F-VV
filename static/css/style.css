@@ -1,30 +1,49 @@
 
 /* 
    ----------------------------------------------------------------
-   PREMIUM UI ENHANCEMENTS (Consolidated & Clean)
+   1. VARIABLES & ROOT
    ----------------------------------------------------------------
 */
-
 :root {
-    /* Base Font and Spacing */
+    /* Colors & Themes */
+    --primary-gold: #D4AF37;
+    --gold-gradient: linear-gradient(135deg, #D4AF37 0%, #F1D592 100%);
+    --bg-primary: #0a0a0b;
+    --bg-secondary: #141416;
+    --sidebar-bg: #0f0f11;
+    --navbar-bg: rgba(15, 15, 17, 0.8);
+    --border-color: rgba(255, 255, 255, 0.08);
+    --text-primary: #ffffff;
+    --text-secondary: #a1a1aa;
+    
+    /* Typography */
     --font-main: 'Poppins', sans-serif;
+    
+    /* Layout */
+    --sidebar-width: 280px;
+    --navbar-height: 70px;
+    
+    /* Spacing */
     --spacing-xs: 4px;
     --spacing-sm: 8px;
     --spacing-md: 16px;
     --spacing-lg: 24px;
     --spacing-xl: 32px;
     
-    /* Standardized Borders */
-    --border-width: 1px;
+    /* Effects */
+    --transition-fast: 0.2s ease;
+    --transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --border-radius-sm: 8px;
     --border-radius-md: 12px;
     --border-radius-lg: 16px;
-    
-    /* Global Transitions */
-    --transition-fast: 0.2s ease;
-    --transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
+/* 
+   ----------------------------------------------------------------
+   2. GLOBAL STYLES
+   ----------------------------------------------------------------
+*/
 body {
     font-family: var(--font-main);
     background: var(--bg-primary);
@@ -34,7 +53,6 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-/* Typography Clarity */
 h1, h2, h3, h4, h5, h6 {
     font-weight: 700;
     letter-spacing: -0.02em;
@@ -50,89 +68,15 @@ p, span, li, label {
     color: var(--text-secondary) !important;
 }
 
-/* Unified Button System */
-.btn-premium-action {
-    width: 40px;
-    height: 40px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: var(--border-radius-md) !important;
-    transition: var(--transition-base);
-    border: var(--border-width) solid var(--border-color);
-    background: var(--bg-secondary);
-    color: var(--primary-color);
+.gold-text {
+    color: var(--primary-gold) !important;
 }
 
-.btn-premium-action:hover {
-    background: var(--primary-color);
-    color: #fff !important;
-    border-color: var(--primary-color);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.2);
-}
-
-.btn-premium-danger {
-    color: #ff4d4d;
-    border-color: rgba(255, 77, 77, 0.2);
-}
-
-.btn-premium-danger:hover {
-    background: #ff4d4d !important;
-    color: #fff !important;
-    border-color: transparent;
-    box-shadow: 0 4px 12px rgba(255, 77, 77, 0.2);
-}
-
-/* Form Elements Clarity */
-.form-control, .form-select {
-    background: var(--bg-secondary) !important;
-    border: var(--border-width) solid var(--border-color) !important;
-    color: var(--text-primary) !important;
-    border-radius: var(--border-radius-md);
-    padding: 12px 18px;
-    transition: var(--transition-fast);
-}
-
-.form-control:focus, .form-select:focus {
-    border-color: var(--primary-color) !important;
-    box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.15) !important;
-    outline: none;
-}
-
-.form-control::placeholder {
-    color: var(--text-secondary);
-    opacity: 0.7;
-}
-
-/* Card System */
-.card, .project-card {
-    background: var(--bg-secondary);
-    border: var(--border-width) solid var(--border-color);
-    border-radius: var(--border-radius-lg);
-    backdrop-filter: blur(12px);
-    transition: var(--transition-base);
-    overflow: hidden;
-}
-
-.card:hover, .project-card:hover {
-    border-color: var(--primary-color);
-    box-shadow: var(--shadow-lg);
-}
-
-/* Icon Color Enforcement */
-.sidebar .nav-link i,
-.top-navbar i,
-.card i {
-    color: var(--primary-color);
-    transition: var(--transition-fast);
-}
-
-.sidebar .nav-link.active i {
-    color: #000 !important;
-}
-
-/* Sidebar Refinement */
+/* 
+   ----------------------------------------------------------------
+   3. LAYOUT COMPONENTS (Sidebar & Navbar)
+   ----------------------------------------------------------------
+*/
 .sidebar {
     width: var(--sidebar-width);
     height: 100vh;
@@ -140,9 +84,61 @@ p, span, li, label {
     position: fixed;
     left: 0;
     top: 0;
-    z-index: 1000;
-    border-right: var(--border-width) solid var(--border-color);
+    z-index: 1050;
+    border-right: 1px solid var(--border-color);
     transition: var(--transition-base);
+}
+
+.sidebar-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100px;
+}
+
+.brand-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none !important;
+    width: 100%;
+}
+
+.brand-logo img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    transition: transform var(--transition-fast);
+}
+
+.brand-logo:hover img {
+    transform: scale(1.05);
+}
+
+.brand-name {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    white-space: nowrap;
+    letter-spacing: 0.5px;
+}
+
+.sidebar-content {
+    padding: 1rem 0.75rem;
+    height: calc(100vh - 180px);
+    overflow-y: auto;
+}
+
+.sidebar-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.sidebar-content::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
 }
 
 .nav-link {
@@ -151,54 +147,162 @@ p, span, li, label {
     padding: 0.75rem 1rem;
     margin-bottom: 4px;
     font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: var(--transition-fast);
+}
+
+.nav-link i {
+    width: 20px;
+    text-align: center;
+    color: var(--primary-gold);
 }
 
 .nav-link:hover {
     color: var(--text-primary);
-    background: rgba(var(--primary-rgb), 0.05);
+    background: rgba(255, 255, 255, 0.05);
 }
 
 .nav-link.active {
     background: var(--gold-gradient);
     color: #000 !important;
-    box-shadow: 0 4px 15px rgba(var(--primary-rgb), 0.3);
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
 }
 
-/* Top Navbar Refinement */
+.nav-link.active i {
+    color: #000 !important;
+}
+
+.nav-section-title {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
+    padding: 1.5rem 1rem 0.5rem;
+    opacity: 0.6;
+    font-weight: 700;
+}
+
+/* Main Content Wrapper */
+.main-wrapper {
+    margin-left: var(--sidebar-width);
+    min-height: 100vh;
+    transition: var(--transition-base);
+    display: flex;
+    flex-direction: column;
+}
+
 .top-navbar {
-    height: 70px;
+    height: var(--navbar-height);
     background: var(--navbar-bg);
     backdrop-filter: blur(10px);
-    border-bottom: var(--border-width) solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
     padding: 0 1.5rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
     position: sticky;
     top: 0;
-    z-index: 999;
+    z-index: 1030;
 }
 
-/* Helper Classes */
-.gold-text {
-    color: var(--primary-color) !important;
+.content-body {
+    padding: var(--spacing-lg);
+    flex: 1;
 }
 
-.bg-premium {
+/* 
+   ----------------------------------------------------------------
+   4. UI ELEMENTS (Buttons, Cards, Forms)
+   ----------------------------------------------------------------
+*/
+.card, .project-card {
     background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    backdrop-filter: blur(12px);
+    transition: var(--transition-base);
+    overflow: hidden;
 }
 
-/* Responsive */
+.card:hover, .project-card:hover {
+    border-color: var(--primary-gold);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn-premium-action {
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--border-radius-md) !important;
+    transition: var(--transition-base);
+    border: 1px solid var(--border-color);
+    background: var(--bg-secondary);
+    color: var(--primary-gold);
+}
+
+.btn-premium-action:hover {
+    background: var(--primary-gold);
+    color: #fff !important;
+    border-color: var(--primary-gold);
+    transform: translateY(-2px);
+}
+
+.form-control, .form-select {
+    background: var(--bg-secondary) !important;
+    border: 1px solid var(--border-color) !important;
+    color: var(--text-primary) !important;
+    border-radius: var(--border-radius-md);
+    padding: 12px 18px;
+    transition: var(--transition-fast);
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--primary-gold) !important;
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15) !important;
+    outline: none;
+}
+
+/* 
+   ----------------------------------------------------------------
+   5. RESPONSIVE DESIGN
+   ----------------------------------------------------------------
+*/
 @media (max-width: 991.98px) {
     .sidebar {
         transform: translateX(-100%);
     }
     .sidebar.show {
         transform: translateX(0);
+        box-shadow: 10px 0 30px rgba(0,0,0,0.5);
     }
     .main-wrapper {
         margin-left: 0 !important;
         width: 100% !important;
     }
+    .sidebar-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        z-index: 1040;
+        display: none;
+    }
+    .sidebar-overlay.show {
+        display: block;
+    }
 }
 
+@media (max-width: 575.98px) {
+    .content-body {
+        padding: var(--spacing-md);
+    }
+    .card-body.p-4 {
+        padding: 1.25rem !important;
+    }
+}

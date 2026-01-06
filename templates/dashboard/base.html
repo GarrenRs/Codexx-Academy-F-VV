@@ -22,6 +22,7 @@
 </head>
 <body>
     <!-- Sidebar -->
+    <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
     <aside class="sidebar">
         <div class="sidebar-header">
             <a href="{{ url_for('dashboard') }}" class="brand-logo">
@@ -211,15 +212,21 @@
     <script>
         function toggleSidebar() {
             document.querySelector('.sidebar').classList.toggle('show');
+            const overlay = document.querySelector('.sidebar-overlay');
+            if (overlay) {
+                overlay.classList.toggle('show');
+            }
         }
 
         // Close sidebar when clicking outside on mobile
         document.addEventListener('click', function(event) {
             const sidebar = document.querySelector('.sidebar');
             const toggleBtn = document.querySelector('[onclick="toggleSidebar()"]');
+            const overlay = document.querySelector('.sidebar-overlay');
 
-            if (window.innerWidth <= 768 && !sidebar.contains(event.target) && toggleBtn && !toggleBtn.contains(event.target)) {
+            if (window.innerWidth <= 991.98 && !sidebar.contains(event.target) && toggleBtn && !toggleBtn.contains(event.target)) {
                 sidebar.classList.remove('show');
+                if (overlay) overlay.classList.remove('show');
             }
         });
 
