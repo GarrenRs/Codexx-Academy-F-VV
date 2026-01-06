@@ -5,6 +5,7 @@
 :root[data-portfolio-theme="terracotta-red"],
 html[data-portfolio-theme="terracotta-red"] {
     --primary-color: #C1440E;
+    --primary-rgb: 193, 68, 14;
     --primary-dark: #A83609;
     --primary-light: #E86A3C;
     --secondary-color: #8B2E0B;
@@ -14,18 +15,21 @@ html[data-portfolio-theme="terracotta-red"] {
     --text-secondary: #6B3D25;
     --bg-primary: #faf7f2;
     --bg-secondary: #f0e8df;
+    --bg-rgb: 250, 247, 242;
     --border-color: #e0d0bb;
     --shadow: 0 0.5rem 1rem rgba(193, 68, 14, 0.15);
     --shadow-lg: 0 1rem 3rem rgba(193, 68, 14, 0.25);
-    --navbar-bg: rgba(61, 31, 10, 0.95);
+    --navbar-bg: rgba(250, 247, 242, 0.95);
 }
 
 html[data-portfolio-theme="terracotta-red"][data-theme="dark"] {
     --text-primary: #ffffff;
-    --text-secondary: #f0d5bf;
+    --text-secondary: #d8d8d8;
     --bg-primary: #1a0f06;
     --bg-secondary: #2d1a0e;
+    --bg-rgb: 26, 15, 6;
     --border-color: #5c3821;
     --shadow: 0 0.5rem 1rem rgba(193, 68, 14, 0.3);
     --shadow-lg: 0 1rem 3rem rgba(193, 68, 14, 0.4);
+    --navbar-bg: rgba(26, 15, 6, 0.9);
 }

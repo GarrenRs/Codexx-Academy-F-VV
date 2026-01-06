@@ -5,6 +5,7 @@
 :root[data-portfolio-theme="vibrant-green"],
 html[data-portfolio-theme="vibrant-green"] {
     --primary-color: #22AA44;
+    --primary-rgb: 34, 170, 68;
     --primary-dark: #1B8A35;
     --primary-light: #4DD464;
     --secondary-color: #0F6B23;
@@ -14,18 +15,21 @@ html[data-portfolio-theme="vibrant-green"] {
     --text-secondary: #2D5A3D;
     --bg-primary: #f2faf5;
     --bg-secondary: #e0f0e8;
+    --bg-rgb: 242, 250, 245;
     --border-color: #bfd5cc;
     --shadow: 0 0.5rem 1rem rgba(34, 170, 68, 0.15);
     --shadow-lg: 0 1rem 3rem rgba(34, 170, 68, 0.25);
-    --navbar-bg: rgba(10, 61, 31, 0.95);
+    --navbar-bg: rgba(242, 250, 245, 0.95);
 }
 
 html[data-portfolio-theme="vibrant-green"][data-theme="dark"] {
     --text-primary: #ffffff;
-    --text-secondary: #d5f0e0;
+    --text-secondary: #d8d8d8;
     --bg-primary: #0d1810;
     --bg-secondary: #1a2d23;
+    --bg-rgb: 13, 24, 16;
     --border-color: #2d5c3d;
     --shadow: 0 0.5rem 1rem rgba(34, 170, 68, 0.3);
     --shadow-lg: 0 1rem 3rem rgba(34, 170, 68, 0.4);
+    --navbar-bg: rgba(13, 24, 16, 0.9);
 }
