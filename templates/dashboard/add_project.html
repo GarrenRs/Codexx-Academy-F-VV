@@ -6,93 +6,67 @@
 {% block page_title %}Add New Project{% endblock %}
 
 {% block content %}
-<div class="row">
+<div class="page-title-section mb-5">
+    <h1 class="display-6 fw-bold mb-2">Construct Showcase</h1>
+    <p class="text-muted fs-5">Initiate a new high-caliber proof-of-work intelligence record</p>
+</div>
+
+<div class="row g-4">
     <div class="col-lg-8">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="mb-0">
-                    <i class="fas fa-plus me-2"></i>Add New Project
+        <div class="card border-0 shadow-lg h-100">
+            <div class="card-header bg-black-50 py-4 px-4">
+                <h5 class="mb-0 text-white fw-bold">
+                    <i class="fas fa-cogs me-2 text-gold"></i>Intelligence Configuration
                 </h5>
             </div>
-            <div class="card-body">
+            <div class="card-body p-4 p-xl-5">
                 <form method="POST" enctype="multipart/form-data" action="{{ url_for('dashboard_add_project') }}">
-                    <div class="mb-3">
-                        <label for="title" class="form-label">Project Title</label>
-                        <input type="text" class="form-control" id="title" name="title" required>
+                    <div class="mb-4">
+                        <label class="form-label small text-uppercase fw-bold letter-spacing-1 text-muted mb-2">Mandate Title</label>
+                        <input type="text" class="form-control form-control-lg" name="title" required placeholder="e.g. Enterprise Ledger Architecture">
                     </div>
                     
-                    <div class="mb-3">
-                        <label for="short_description" class="form-label">
-                            Short Description
-                            <span class="badge bg-info">Brief Summary</span>
-                        </label>
-                        <textarea class="form-control" id="short_description" name="short_description" rows="2" required 
-                                  placeholder="Brief description shown in project cards and homepage"></textarea>
-                        <div class="form-text">
-                            <i class="fas fa-info-circle me-1"></i>
-                            Short description (1-2 lines) displayed in project cards and intro section
+                    <div class="mb-4">
+                        <label class="form-label small text-uppercase fw-bold letter-spacing-1 text-muted mb-2">Executive Summary</label>
+                        <textarea class="form-control form-control-lg" name="short_description" rows="2" required placeholder="High-level strategic abstract..."></textarea>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="form-label small text-uppercase fw-bold letter-spacing-1 text-muted mb-2">Operational Intelligence</label>
+                        <textarea class="form-control form-control-lg" name="content" rows="8" required placeholder="Detailed methodology, objectives, and execution history..."></textarea>
+                    </div>
+                    
+                    <div class="row g-4 mb-4">
+                        <div class="col-md-6">
+                            <label class="form-label small text-uppercase fw-bold letter-spacing-1 text-muted mb-2">Visual Proof</label>
+                            <input type="file" class="form-control" name="image" accept="image/*">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small text-uppercase fw-bold letter-spacing-1 text-muted mb-2">Verification URL</label>
+                            <input type="url" class="form-control" name="demo_url" placeholder="https://verify.academy.com">
                         </div>
                     </div>
                     
-                    <div class="mb-3">
-                        <label for="content" class="form-label">
-                            Full Project Content
-                            <span class="badge bg-primary">Detailed Description</span>
-                        </label>
-                        <textarea class="form-control" id="content" name="content" rows="10" required
-                                  placeholder="Write a detailed description of the project, objectives, features, and technologies used...&#10;&#10;You can use HTML for formatting or plain text"></textarea>
-                        <div class="form-text">
-                            <i class="fas fa-info-circle me-1"></i>
-                            Detailed content that will appear on the project page (supports HTML and plain text)
-                            <br>
-                            <small class="text-muted">
-                                💡 Tip: You can use headings like &lt;h3&gt;, lists &lt;ul&gt;, and paragraphs &lt;p&gt; for formatting
-                            </small>
-                        </div>
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label for="image" class="form-label">Project Image</label>
-                        <input type="file" class="form-control" id="image" name="image" 
-                               accept="image/png,image/jpg,image/jpeg,image/gif,image/webp">
-                        <div class="form-text">Choose an image for the project (PNG, JPG, JPEG, GIF, WebP)</div>
-                    </div>
-                    
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="demo_url" class="form-label">Demo URL</label>
-                            <input type="url" class="form-control" id="demo_url" name="demo_url" 
-                                   placeholder="https://example.com">
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="github_url" class="form-label">GitHub URL</label>
-                            <input type="url" class="form-control" id="github_url" name="github_url" 
-                                   placeholder="https://github.com/username/project">
-                        </div>
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label class="form-label">Technologies Used</label>
+                    <div class="mb-5">
+                        <label class="form-label small text-uppercase fw-bold letter-spacing-1 text-muted mb-2">Technological Stack</label>
                         <div id="technologiesContainer">
-                            <div class="input-group mb-2 tech-row">
-                                <input type="text" class="form-control" name="technologies[]" 
-                                       placeholder="e.g., React">
-                                <button type="button" class="btn btn-outline-danger remove-tech-btn">
-                                    <i class="fas fa-times"></i>
-                                </button>
+                            <div class="input-group mb-3 tech-row">
+                                <span class="input-group-text bg-black-25 border-secondary text-gold-muted"><i class="fas fa-microchip"></i></span>
+                                <input type="text" class="form-control" name="technologies[]" placeholder="e.g. Rust / WebAssembly">
+                                <button type="button" class="btn-premium-action btn-premium-danger remove-tech-btn border-secondary"><i class="fas fa-times"></i></button>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-outline-primary btn-sm" id="addTechBtn">
-                            <i class="fas fa-plus me-1"></i>Add Technology
+                        <button type="button" class="btn btn-outline-gold btn-sm px-4" id="addTechBtn">
+                            <i class="fas fa-plus-circle me-1"></i>Expand Stack
                         </button>
                     </div>
                     
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-between">
-                        <a href="{{ url_for('dashboard_projects') }}" class="btn btn-secondary">
-                            <i class="fas fa-arrow-left me-2"></i>Cancel
+                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mt-5 pt-4 border-top border-secondary gap-3">
+                        <a href="{{ url_for('dashboard_projects') }}" class="btn btn-link text-muted text-decoration-none fw-bold order-2 order-md-1">
+                            <i class="fas fa-arrow-left me-2"></i>Abort Mandate
                         </a>
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-save me-2"></i>Save Project
+                        <button type="submit" class="btn btn-gold-gradient px-5 py-2 shadow-lg order-1 order-md-2">
+                            <i class="fas fa-broadcast-tower me-2"></i>Deploy Intelligence
                         </button>
                     </div>
                 </form>
@@ -101,61 +75,27 @@
     </div>
     
     <div class="col-lg-4">
-        <div class="card mb-3">
-            <div class="card-header bg-primary text-white">
-                <h6 class="mb-0">
-                    <i class="fas fa-lightbulb me-2"></i>Tips for Adding Project
-                </h6>
-            </div>
-            <div class="card-body">
-                <ul class="list-unstyled small">
-                    <li class="mb-2">
-                        <i class="fas fa-check text-success me-2"></i>
-                        Choose a clear and descriptive project title
-                    </li>
-                    <li class="mb-2">
-                        <i class="fas fa-check text-success me-2"></i>
-                        Short description: 1-2 lines only
-                    </li>
-                    <li class="mb-2">
-                        <i class="fas fa-check text-success me-2"></i>
-                        Full content: Explain the project in detail
-                    </li>
-                    <li class="mb-2">
-                        <i class="fas fa-check text-success me-2"></i>
-                        Add a clear and attractive image
-                    </li>
-                    <li class="mb-2">
-                        <i class="fas fa-check text-success me-2"></i>
-                        Add demo and code repository links
-                    </li>
-                    <li class="mb-0">
-                        <i class="fas fa-check text-success me-2"></i>
-                        Specify technologies used accurately
-                    </li>
-                </ul>
-            </div>
-        </div>
-        
-        <div class="card">
-            <div class="card-header bg-info text-white">
-                <h6 class="mb-0">
-                    <i class="fas fa-code me-2"></i>Formatting Examples
-                </h6>
-            </div>
-            <div class="card-body small">
-                <p class="mb-2"><strong>Sub-heading:</strong></p>
-                <code>&lt;h3&gt;Features&lt;/h3&gt;</code>
-                
-                <p class="mb-2 mt-3"><strong>Bullet list:</strong></p>
-                <code>&lt;ul&gt;<br>&nbsp;&nbsp;&lt;li&gt;Easy to use&lt;/li&gt;<br>&lt;/ul&gt;</code>
-                
-                <p class="mb-2 mt-3"><strong>Regular paragraph:</strong></p>
-                <code>&lt;p&gt;Project description...&lt;/p&gt;</code>
-                
-                <p class="mb-0 mt-3 text-muted">
-                    <small>Or write plain text without HTML</small>
-                </p>
+        <div class="card border-0 shadow-lg bg-black-50 h-100">
+            <div class="card-body p-4 p-xl-5">
+                <h6 class="gold-text fw-bold text-uppercase letter-spacing-2 mb-4">Quality Mandates</h6>
+                <div class="d-flex mb-4">
+                    <div class="flex-shrink-0 avatar-xs rounded-circle bg-success-soft d-flex align-items-center justify-content-center me-3" style="width: 32px; height: 32px; background: rgba(16, 185, 129, 0.1);">
+                        <i class="fas fa-check text-success small"></i>
+                    </div>
+                    <p class="small text-muted mb-0">High-resolution cover imagery (min 1920x1080) optimized for 16:9 aspect ratio.</p>
+                </div>
+                <div class="d-flex mb-4">
+                    <div class="flex-shrink-0 avatar-xs rounded-circle bg-success-soft d-flex align-items-center justify-content-center me-3" style="width: 32px; height: 32px; background: rgba(16, 185, 129, 0.1);">
+                        <i class="fas fa-check text-success small"></i>
+                    </div>
+                    <p class="small text-muted mb-0">Quantitative data points documenting specific technical challenges and solutions.</p>
+                </div>
+                <div class="d-flex">
+                    <div class="flex-shrink-0 avatar-xs rounded-circle bg-success-soft d-flex align-items-center justify-content-center me-3" style="width: 32px; height: 32px; background: rgba(16, 185, 129, 0.1);">
+                        <i class="fas fa-check text-success small"></i>
+                    </div>
+                    <p class="small text-muted mb-0">Live verification links or architectural documentation for proof-of-work.</p>
+                </div>
             </div>
         </div>
     </div>

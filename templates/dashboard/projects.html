@@ -6,64 +6,77 @@
 {% block page_title %}Portfolio Gallery{% endblock %}
 
 {% block content %}
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h5 class="mb-0">Showcase Items ({{ data.projects|length if data.projects else 0 }})</h5>
-    <a href="{{ url_for('dashboard_add_project') }}" class="btn btn-primary">
-        <i class="fas fa-plus me-2"></i>Add New Showcase Item
+<div class="page-title-section d-flex justify-content-between align-items-center mb-5">
+    <div>
+        <h1 class="display-6 fw-bold mb-2">Portfolio Showcase</h1>
+        <p class="text-muted fs-5 mb-0">Elevate your professional presence with verified proof-of-work</p>
+    </div>
+    <a href="{{ url_for('dashboard_add_project') }}" class="btn btn-gold-gradient shadow-lg px-4 py-2">
+        <i class="fas fa-plus-circle me-2"></i>Curate Project
     </a>
 </div>
 
 {% if data.projects %}
-<div class="table-responsive">
-    <table class="table table-dark table-hover align-middle">
-        <thead>
-            <tr>
-                <th>Image</th>
-                <th>Project Details</th>
-                <th>Technologies</th>
-                <th class="text-end">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for project in data.projects %}
-            <tr>
-                <td style="width: 120px;">
-                    {% if project.image and project.image.startswith('static/') %}
-                        <img src="{{ url_for('static', filename=project.image.replace('static/', '')) }}" 
-                             class="rounded border border-secondary" alt="{{ project.title }}" 
-                             style="width: 100px; height: 60px; object-fit: cover;">
-                    {% else %}
-                        <img src="{{ project.image or url_for('static', filename='assets/project-placeholder.svg') }}" 
-                             class="rounded border border-secondary" alt="{{ project.title }}" 
-                             style="width: 100px; height: 60px; object-fit: cover;">
-                    {% endif %}
-                </td>
-                <td>
-                    <h6 class="mb-1 fw-bold text-white">{{ project.title }}</h6>
-                    <p class="small text-muted mb-0">{{ project.description[:80] }}...</p>
-                </td>
-                <td>
-                    {% if project.technologies %}
-                        {% for tech in project.technologies %}
-                            <span class="badge bg-dark border border-secondary text-info small">{{ tech }}</span>
-                        {% endfor %}
-                    {% endif %}
-                </td>
-                <td class="text-end">
-                    <div class="btn-group">
-                        <a href="{{ url_for('dashboard_edit_project', project_id=project.id) }}" class="btn btn-sm btn-outline-gold" title="Edit">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <a href="{{ url_for('dashboard_delete_project', project_id=project.id) }}" class="btn btn-sm btn-outline-danger" 
-                           onclick="return confirm('Delete this project?')" title="Delete">
-                            <i class="fas fa-trash"></i>
-                        </a>
-                    </div>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<div class="card border-0 shadow-lg overflow-hidden">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-dark table-hover align-middle mb-0">
+                <thead class="bg-black-50">
+                    <tr>
+                        <th class="ps-4 py-4 text-uppercase letter-spacing-1">Visual Asset</th>
+                        <th class="py-4 text-uppercase letter-spacing-1">Intelligence Details</th>
+                        <th class="py-4 text-uppercase letter-spacing-1">Core Stack</th>
+                        <th class="text-end pe-4 py-4 text-uppercase letter-spacing-1">Operations</th>
+                    </tr>
+                </thead>
+                <tbody class="border-top-0">
+                    {% for project in data.projects %}
+                    <tr class="transition-all">
+                        <td class="ps-4 py-4" style="width: 160px;">
+                            <div class="position-relative hover-scale-sm">
+                                {% if project.image and project.image.startswith('static/') %}
+                                    <img src="{{ url_for('static', filename=project.image.replace('static/', '')) }}" 
+                                         class="rounded-3 shadow-sm border border-secondary" alt="{{ project.title }}" 
+                                         style="width: 130px; height: 80px; object-fit: cover;">
+                                {% else %}
+                                    <img src="{{ project.image or url_for('static', filename='assets/project-placeholder.svg') }}" 
+                                         class="rounded-3 shadow-sm border border-secondary" alt="{{ project.title }}" 
+                                         style="width: 130px; height: 80px; object-fit: cover;">
+                                {% endif %}
+                            </div>
+                        </td>
+                        <td class="py-4">
+                            <h5 class="mb-1 fw-bold text-white">{{ project.title }}</h5>
+                            <p class="small text-muted mb-0 opacity-75">{{ project.description[:100] if project.description else 'Technical intelligence pending...' }}</p>
+                        </td>
+                        <td class="py-4">
+                            <div class="d-flex flex-wrap gap-2">
+                                {% if project.technologies %}
+                                    {% for tech in project.technologies %}
+                                        <span class="badge bg-soft-gold border-gold-soft small px-3">{{ tech }}</span>
+                                    {% endfor %}
+                                {% else %}
+                                    <span class="text-muted small italic">Standard Stack</span>
+                                {% endif %}
+                            </div>
+                        </td>
+                        <td class="text-end pe-4 py-4">
+                            <div class="btn-group-premium shadow-sm">
+                                <a href="{{ url_for('dashboard_edit_project', project_id=project.id) }}" class="btn-premium-action" title="Refine Intelligence">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="{{ url_for('dashboard_delete_project', project_id=project.id) }}" class="btn-premium-action btn-premium-danger" 
+                                   onclick="return confirm('Archive this project intelligence?')" title="Archive">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 {% else %}
     <div class="card">

@@ -6,103 +6,96 @@
 {% block page_title %}Core Competencies{% endblock %}
 
 {% block content %}
-<div class="card">
-    <div class="card-header">
-        <h5 class="mb-0">
-            <i class="fas fa-star me-2"></i>Manage Professional Competencies
-        </h5>
-    </div>
-    <div class="card-body">
-        <form method="POST" id="skillsForm" action="{{ url_for('dashboard_skills') }}">
-            <div id="skillsContainer">
-                {% if data.skills %}
-                    {% for skill in data.skills %}
-                        <div class="row skill-row mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label text-white-50">Competency / Skill</label>
-                                <input type="text" class="form-control bg-dark text-white border-secondary" name="skill_name[]" 
-                                       value="{{ skill.name }}" required>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label text-white-50">Level (%)</label>
-                                <input type="range" class="form-range skill-range" name="skill_level[]" 
-                                       min="0" max="100" value="{{ skill.level }}">
-                                <div class="text-center mt-1">
-                                    <span class="percentage-display text-white fw-bold fs-5">{{ skill.level }}%</span>
-                                </div>
-                            </div>
-                            <div class="col-md-2 d-flex align-items-end">
-                                <button type="button" class="btn btn-danger btn-sm remove-skill-btn">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </div>
-                    {% endfor %}
-                {% else %}
-                    <div class="row skill-row mb-3">
-                        <div class="col-md-6">
-                            <label class="form-label text-white-50">Skill Name</label>
-                            <input type="text" class="form-control bg-dark text-white border-secondary" name="skill_name[]" 
-                                   placeholder="e.g., HTML/CSS" required>
-                        </div>
-                        <div class="col-md-4">
-                            <label class="form-label text-white-50">Level (%)</label>
-                            <input type="range" class="form-range skill-range" name="skill_level[]" 
-                                   min="0" max="100" value="80">
-                            <div class="text-center mt-1">
-                                <span class="percentage-display text-white fw-bold fs-5">80%</span>
-                            </div>
-                        </div>
-                        <div class="col-md-2 d-flex align-items-end">
-                            <button type="button" class="btn btn-danger btn-sm remove-skill-btn">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </div>
-                {% endif %}
-            </div>
-            
-            <div class="mb-3">
-                <button type="button" class="btn btn-success" id="addSkillBtn">
-                    <i class="fas fa-plus me-2"></i>Add New Competency
-                </button>
-            </div>
-            
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-save me-2"></i>Save All Competencies
-                </button>
-            </div>
-        </form>
-    </div>
+<div class="page-title-section mb-5">
+    <h1 class="display-6 fw-bold mb-2">Technical Mastery</h1>
+    <p class="text-muted fs-5">Quantify your professional expertise and operational intelligence</p>
 </div>
 
-<div class="card mt-4">
-    <div class="card-header">
-        <h5 class="mb-0">
-            <i class="fas fa-eye me-2"></i>Competencies Preview
-        </h5>
-    </div>
-    <div class="card-body">
-        <div class="row" id="previewContainer">
-            {% if data.skills %}
-                {% for skill in data.skills %}
-                    <div class="col-lg-6 mb-3">
-                        <div class="d-flex justify-content-between mb-2">
-                            <span class="skill-name">{{ skill.name }}</span>
-                            <span class="skill-percentage">{{ skill.level }}%</span>
-                        </div>
-                        <div class="progress" style="height: 10px;">
-                            <div class="progress-bar bg-primary" style="width: {{ skill.level }}%"></div>
-                        </div>
+<div class="row g-4">
+    <div class="col-lg-7">
+        <div class="card border-0 shadow-lg h-100">
+            <div class="card-header bg-black-50 py-4 px-4">
+                <h5 class="mb-0 text-white fw-bold">
+                    <i class="fas fa-rocket me-2 text-gold"></i>Skill Orchestration
+                </h5>
+            </div>
+            <div class="card-body p-4 p-xl-5">
+                <form method="POST" id="skillsForm" action="{{ url_for('dashboard_skills') }}">
+                    <div id="skillsContainer">
+                        {% if data.skills %}
+                            {% for skill in data.skills %}
+                                <div class="row skill-row mb-5 animate-fadeIn align-items-center">
+                                    <div class="col-md-6 mb-3 mb-md-0">
+                                        <label class="form-label small text-uppercase fw-bold letter-spacing-1 text-gold-muted mb-2">Competency Name</label>
+                                        <input type="text" class="form-control form-control-lg bg-black-25" name="skill_name[]" 
+                                               value="{{ skill.name }}" required placeholder="e.g. Distributed Systems">
+                                    </div>
+                                    <div class="col-md-4 mb-3 mb-md-0">
+                                        <label class="form-label small text-uppercase fw-bold letter-spacing-1 text-gold-muted mb-2">Mastery Index</label>
+                                        <input type="range" class="form-range skill-range custom-range" name="skill_level[]" 
+                                               min="0" max="100" value="{{ skill.level }}">
+                                        <div class="d-flex justify-content-between mt-2">
+                                            <span class="small text-muted">Aptitude</span>
+                                            <span class="percentage-display gold-text fw-bold fs-5">{{ skill.level }}%</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 d-flex align-items-center justify-content-end pt-md-4">
+                                        <button type="button" class="btn-premium-action btn-premium-danger rounded-circle remove-skill-btn">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="row skill-row mb-5">
+                                <div class="col-md-6 mb-3 mb-md-0">
+                                    <label class="form-label small text-uppercase fw-bold letter-spacing-1 text-muted mb-2">Competency Name</label>
+                                    <input type="text" class="form-control form-control-lg" name="skill_name[]" 
+                                           placeholder="e.g. System Architecture" required>
+                                </div>
+                                <div class="col-md-4 mb-3 mb-md-0">
+                                    <label class="form-label small text-uppercase fw-bold letter-spacing-1 text-muted mb-2">Mastery Index</label>
+                                    <input type="range" class="form-range skill-range" name="skill_level[]" 
+                                           min="0" max="100" value="85">
+                                    <div class="d-flex justify-content-between mt-2">
+                                        <span class="small text-muted">Aptitude</span>
+                                        <span class="percentage-display gold-text fw-bold fs-5">85%</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 d-flex align-items-center justify-content-end pt-md-4">
+                                    <button type="button" class="btn btn-outline-danger btn-sm rounded-circle p-2 remove-skill-btn" style="width: 38px; height: 38px;">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        {% endif %}
                     </div>
-                {% endfor %}
-            {% else %}
-                <div class="col-12 text-center text-muted">
-                    <i class="fas fa-star fa-3x mb-3 opacity-50"></i>
-                    <p>No skills added yet</p>
+                    
+                    <div class="mt-5 pt-4 border-top border-secondary d-flex flex-column flex-md-row gap-3 justify-content-between align-items-center">
+                        <button type="button" class="btn btn-outline-gold px-4 py-2 w-100 w-md-auto" id="addSkillBtn">
+                            <i class="fas fa-plus me-2"></i>Add Competency
+                        </button>
+                        <button type="submit" class="btn btn-gold-gradient px-5 py-2 w-100 w-md-auto shadow-lg">
+                            <i class="fas fa-shield-alt me-2"></i>Persist Expertise
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-5">
+        <div class="card border-0 shadow-lg sticky-top h-auto" style="top: 100px;">
+            <div class="card-header bg-black-50 py-4 px-4">
+                <h5 class="mb-0 text-white fw-bold">
+                    <i class="fas fa-broadcast-tower me-2 text-gold"></i>Expertise Analytics
+                </h5>
+            </div>
+            <div class="card-body p-4 p-xl-5">
+                <div id="previewContainer">
+                    <!-- Dynamic Intelligence visualization -->
                 </div>
-            {% endif %}
+            </div>
         </div>
     </div>
 </div>

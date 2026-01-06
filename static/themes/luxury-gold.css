@@ -10,14 +10,14 @@ html[data-portfolio-theme="luxury-gold"] {
     --secondary-color: #8B7355;
     --accent-color: #FFD700;
     --gold-gradient: linear-gradient(135deg, #D4AF37 0%, #FFD700 50%, #B8941F 100%);
-    --text-primary: #1a1410;
-    --text-secondary: #4a3f35;
-    --bg-primary: #f5f0e8;
-    --bg-secondary: #ebe3d5;
-    --border-color: #d9c9b3;
-    --shadow: 0 0.5rem 1rem rgba(212, 175, 55, 0.15);
-    --shadow-lg: 0 1rem 3rem rgba(212, 175, 55, 0.25);
-    --navbar-bg: rgba(10, 10, 10, 0.95);
+    --text-primary: #f0f0f0;
+    --text-secondary: #a0a0a0;
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #121212;
+    --border-color: rgba(212, 175, 55, 0.15);
+    --shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.7);
+    --navbar-bg: rgba(10, 10, 10, 0.9);
 }
 
 html[data-portfolio-theme="luxury-gold"][data-theme="dark"] {
