@@ -30,3 +30,9 @@ requests
 sqlalchemy
 weasyprint
 Werkzeug
+apscheduler
+flask
+flask-sqlalchemy
+requests
+sqlalchemy
+werkzeug
